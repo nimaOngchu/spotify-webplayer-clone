@@ -1,6 +1,21 @@
 .App {
   text-align: center;
 }
+
+.ui.menu {
+ justify-content: center;
+}
+.ui.secondary.pointing.menu {
+  border: none !important;
+}
+.ui.card, .ui.cards>.card {
+  background: none !important;
+  box-shadow: none !important;
+}
+.ui.card>:first-child, .ui.cards>.card>:first-child {
+  border-radius:none !important;
+}
+
 /* SidePanel.js */
 .custom_menu{
   display:flex;
@@ -13,7 +28,10 @@
 
 }
 .whiteText {
-  color: #ffff
+  color: #ffff !important
+}
+.greyText{
+  color:rgb(202, 199, 199)!important;
 }
 .displayBlock{
   display: block;
@@ -33,4 +51,5 @@ color: #ffff;
 bottom:0;
 padding:10px;
   width:100%;
+
 }
