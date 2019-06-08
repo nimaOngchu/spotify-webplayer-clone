@@ -1,23 +1,22 @@
 import React, { Component, Fragment } from 'react';
 import { Icon, Divider, List, Image, Button } from 'semantic-ui-react';
 import CustomMenu from './CustomMenu';
-import {spotifyApi} from 'spotify-web-api-js'
 const Custom_Mnu = [
   { content: 'home', icon: 'home' },
   { content: 'search', icon: 'search' },
   { content: 'Your Library', icon: 'book' }
 ];
 export class SidePanel extends Component {
-    //  spotifyApi = new SpotifyWebApi();
   state = { activeMenu: 'home' };
+
   changeActiveClass = menuName => {
     this.setState({ activeMenu: menuName });
-    // console.log(this.state.activeMenu);
   };
+
   displayCustomMenu = () => {
     return Custom_Mnu.map(menu => (
-        <CustomMenu
-            key = {menu.content +menu.icon}
+      <CustomMenu
+        key={menu.content + menu.icon}
         content={menu.content}
         icon={menu.icon}
         activeMenu={this.state.activeMenu}
@@ -25,7 +24,9 @@ export class SidePanel extends Component {
       />
     ));
   };
-    render() {
+
+  render() {
+    const { login, user } = this.props;
 
     return (
       <Fragment>
@@ -49,23 +50,26 @@ export class SidePanel extends Component {
           secondaryContent="Playlist"
         />
         <div className={'sidepanelFooter'}>
-                <Divider />
-                {this.props.login ?
-
-                    <List selection verticalAlign="middle">
-            <List.Item>
-              <Image
-                avatar
-                src="https://react.semantic-ui.com/images/avatar/small/christian.jpg"
-              />
-              <List.Content>
-                <List.Header style={{ color: 'white' }}>
-                  Nima ongchu sherpa
-                </List.Header>
-              </List.Content>
-            </List.Item>
-          </List>:  <Button inverted fluid onClick={() => window.location = 'http://localhost:8888/login'}>Login</Button>
-                    }
+          <Divider />
+          {login ? (
+            <List selection verticalAlign="middle">
+              <List.Item>
+                <Image avatar src={user && user.images[0].url} />
+                <List.Content>
+                  <List.Header style={{ color: 'white' }}>
+                    {user && user.display_name}
+                  </List.Header>
+                </List.Content>
+              </List.Item>
+            </List>
+          ) : (
+            <Button
+              inverted
+              fluid
+              onClick={() => (window.location = 'http://localhost:8888/login')}>
+              Login
+            </Button>
+          )}
         </div>
       </Fragment>
     );
