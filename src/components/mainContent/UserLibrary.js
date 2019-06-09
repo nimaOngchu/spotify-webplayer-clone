@@ -19,6 +19,7 @@ class UserLibrary extends Component {
 
 render()
 {
+console.log(this.props.playlist)
   const { active } = this.state;
   const content = (
     <div>

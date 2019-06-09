@@ -20,3 +20,12 @@ export const setPlaylists = playlists => {
         }
     }
 };
+
+export const setCurrentPlaylists = playlist => {
+    return {
+        type: actionTypes.SET_PLAYLISTS,
+        payload: {
+            currentPlaylists: playlist
+        }
+    }
+};

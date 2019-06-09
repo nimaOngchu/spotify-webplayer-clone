@@ -19,7 +19,8 @@ const user_reducer = (state = inintialUserState, action) => {
 }
 
 const initialPlaylistsState = {
-    playlists: []
+    playlists: [],
+    currentPlaylist:[]
 }
 const playlists_reducer = (state = initialPlaylistsState, action) => {
     switch (action.type) {
@@ -27,6 +28,10 @@ const playlists_reducer = (state = initialPlaylistsState, action) => {
             return {
                playlists:action.payload.playlists
             };
+            case actionTypes.SET_CURRENT_PLAYLIST:
+                return {
+                   currentPlaylists:action.payload.currentPlaylist
+                };
         default: return state
     }
 

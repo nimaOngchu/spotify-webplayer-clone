@@ -15,7 +15,9 @@
 .ui.card>:first-child, .ui.cards>.card>:first-child {
   border-radius:none !important;
 }
-
+.ui.segment {
+  padding:  0 !important;
+}
 /* SidePanel.js */
 .custom_menu{
   display:flex;
@@ -52,4 +54,7 @@ bottom:0;
 padding:10px;
   width:100%;
 
+}
+.p-r-1{
+  padding-right: 1rem !important;
 }
