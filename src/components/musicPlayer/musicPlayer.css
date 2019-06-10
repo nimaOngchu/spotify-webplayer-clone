@@ -1,0 +1,14 @@
+.musicPlayer_contianer{
+    display:flex;
+    justify-content: center;
+    background: black;
+    width:100%;
+    padding:1px;
+   
+}
+audio {
+    filter: saturate(30%);
+    filter: sepia(60%);
+    width: 200px;
+
+}

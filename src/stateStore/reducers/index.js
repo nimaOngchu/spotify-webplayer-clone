@@ -26,19 +26,33 @@ const playlists_reducer = (state = initialPlaylistsState, action) => {
     switch (action.type) {
         case actionTypes.SET_PLAYLISTS:
             return {
+                ...state,
                playlists:action.payload.playlists
             };
             case actionTypes.SET_CURRENT_PLAYLIST:
                 return {
-                   currentPlaylists:action.payload.currentPlaylist
+                    ...state,
+                    currentPlaylist: action.payload.currentPlaylist
                 };
         default: return state
     }
 
 }
-
+// Access Token
+const initialAccessTokenState = { accessToken: null };
+const accessToken_reducer = (state = initialAccessTokenState, action) => {
+    switch (action.type) {
+        case actionTypes.SET_ACCESS_TOKEN:
+            return {
+                accessToken:action.payload.accessToken
+            }
+        default:
+            return state
+    }
+}
 const rootReducer = combineReducers({
     user: user_reducer,
-   playlists: playlists_reducer
+    playlists: playlists_reducer,
+   getAccessToken:accessToken_reducer
   });
   export default rootReducer;

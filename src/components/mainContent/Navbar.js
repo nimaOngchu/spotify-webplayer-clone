@@ -21,6 +21,7 @@ export default class Navbar extends Component {
       <Menu secondary inverted pointing>
         {NAV_MENU_ITEMS.map(menu => (
           <Menu.Item
+            key={menu.name}
             name={menu.name}
             active={activeItem === menu.name}
             onClick={this.handleItemClick}

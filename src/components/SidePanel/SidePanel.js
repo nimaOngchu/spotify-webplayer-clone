@@ -2,9 +2,9 @@ import React, { Component, Fragment } from 'react';
 import { Icon, Divider, List, Image, Button } from 'semantic-ui-react';
 import CustomMenu from './CustomMenu';
 const Custom_Mnu = [
-  { content: 'home', icon: 'home' },
+  { content: 'home', icon: 'home', linkTo: '/home' },
   { content: 'search', icon: 'search' },
-  { content: 'Your Library', icon: 'book' }
+  { content: 'Your Library', icon: 'book', linkTo: '/playlist' }
 ];
 export class SidePanel extends Component {
   state = { activeMenu: 'home' };
@@ -21,12 +21,13 @@ export class SidePanel extends Component {
         icon={menu.icon}
         activeMenu={this.state.activeMenu}
         click={this.changeActiveClass}
+        linkTo={menu.linkTo}
       />
     ));
   };
 
   render() {
-    const { login, user } = this.props;
+    const { login, user, token } = this.props;
 
     return (
       <Fragment>
@@ -51,7 +52,14 @@ export class SidePanel extends Component {
         />
         <div className={'sidepanelFooter'}>
           <Divider />
-          {login ? (
+          {token === null ? (
+            <Button
+              inverted
+              fluid
+              onClick={() => (window.location = 'http://localhost:8888/login')}>
+              Login
+            </Button>
+          ) : (
             <List selection verticalAlign="middle">
               <List.Item>
                 <Image avatar src={user && user.images[0].url} />
@@ -62,13 +70,6 @@ export class SidePanel extends Component {
                 </List.Content>
               </List.Item>
             </List>
-          ) : (
-            <Button
-              inverted
-              fluid
-              onClick={() => (window.location = 'http://localhost:8888/login')}>
-              Login
-            </Button>
           )}
         </div>
       </Fragment>

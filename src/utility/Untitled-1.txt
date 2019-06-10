@@ -1,0 +1,91 @@
+App
+
+Playlist
+ - list of Track
+
+Track
+ - track info
+
+AudioPlayer
+ - track
+
+
+components
+ - Playlist
+    - index.js
+    - Playlist.js
+    - Playlist.scss
+ - Track
+    - index.js
+    - Track.js
+    - Track.scss
+
+Plyalist/index.js
+
+export * from './Playlist'
+
+App {
+    import {Playlist} from './components/Playlist'
+}
+
+----
+
+ReactRouter
+
+/home
+/login
+/playlist
+
+spotify - redirect_uri
+/callback
+
+<Router>
+    <Route path="/callback" component={Callback}/>
+</Router>
+
+
+Callback {
+    constructor {
+        const token = location.href.accessToken
+        this.props.setAccessToken(token);
+    }
+
+    render {
+        <Redirect path="/home"></Redirect>
+    }
+}
+
+Home {
+    componentDidMoung {
+        this.props.token
+
+        spotify.getTracks(token, id);
+    }
+
+    render {
+
+    }
+}
+
+DataFetcher.js
+class DataFetcher {
+    spotify = new Spotify();
+
+    getTracks() {
+        spotify.getTracks();
+    }
+}
+
+const dataFetcher = new DataFetcher();
+
+export default dataFetcher;
+
+const spotify = new Spotify();
+export default spotify;
+
+
+component - ui render
+action - data fetch
+reducer - data store
+
+dumb component -> actions -> reducer -> smart component

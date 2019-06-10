@@ -1,19 +1,23 @@
 import React, { Component, Fragment } from 'react';
 import Navbar from './Navbar';
-import UserLibrary from './UserLibrary';
 import { connect } from 'react-redux';
-import { Card } from 'semantic-ui-react';
+import { Card, Button } from 'semantic-ui-react';
+import Playlist from './Playlist';
 
 export class Home extends Component {
   render() {
     return (
       <Fragment >
         <Navbar />
-        <Card.Group itemsPerRow={6}>
+        <div style ={{display:'flex',padding:'40px', justifyContent:'center'}}>
+          <Button children='New Playlist' color='green' style={{borderRadius: '100px'}}/>
+        </div>
+
+        {<Card.Group itemsPerRow={6}>
         {this.props.playlists.map(playlist => (
-          <UserLibrary playlist={playlist}/>
+          <Playlist key= {playlist.id} playlist={playlist}/>
         ))}
-       </Card.Group>
+       </Card.Group>}
       </Fragment>
     );
   }

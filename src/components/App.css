@@ -18,6 +18,10 @@
 .ui.segment {
   padding:  0 !important;
 }
+.ui.grid {
+  margin-top: 0 !important;
+  margin-bottom: 0 !important;
+}
 /* SidePanel.js */
 .custom_menu{
   display:flex;
@@ -28,6 +32,9 @@
   cursor: pointer;
   position: relative;
 
+}
+a:hover{
+  color:white;
 }
 .whiteText {
   color: #ffff !important
