@@ -3,13 +3,16 @@ import { Grid, Segment } from 'semantic-ui-react';
 import './App.css';
 import SidePanel from './SidePanel/SidePanel';
 import { connect } from 'react-redux';
-import { setPlaylists } from '../stateStore/actions';
+import { setPlaylists, setCurrentPlaylist } from '../stateStore/actions';
 import SpotifyWebApi from '../utility/Spotify';
-import ReactMediaVisualizer from 'react-media-visualizer';
 import Home from './mainContent/Home';
 import { Route, BrowserRouter } from 'react-router-dom';
-import Test from './mainContent/playlistTracls/playlistTracks';
+import Playlist from './mainContent/playlistTracls/Playlist';
 import TokenKeeper from './TokenKeeper';
+import Search from './mainContent/search/Search';
+import MusicPlayer from './musicPlayer/MusicPlayer';
+import songs from '../songs'
+import { type } from 'os';
 
 class App extends Component {
   state = {
@@ -17,10 +20,8 @@ class App extends Component {
     user: null,
     token: null,
     userLibrary: null,
-    playlist: [],
-    playlistIsPlaying: false,
-    currentSongIndex: 0,
-    theme: 'spotify'
+    currentPlaylists:songs,
+
   };
 
   getHashParams = () => {
@@ -43,39 +44,29 @@ class App extends Component {
   getUserPlaylist = userId => {
     SpotifyWebApi.getUserPlaylists(userId).then(playlists => {
       this.props.setPlaylists(playlists.items);
+        SpotifyWebApi.getPlaylist(playlists.items[0].id).then(playlist => {
+    this.props.setCurrentPlaylist(playlist);
+    });
     });
   };
 
-  componentDidMount() {
+  componentWillMount() {
     let accessToken = localStorage.getItem('accessToken');
     SpotifyWebApi.setAccessToken(accessToken);
-     this.setState({token:accessToken})
+    this.setState({ token: accessToken });
     this.getUserInfo();
-  }
 
-  receiveStateUpdates(payload) {
-    if (payload.theme) {
-      switch (payload.theme) {
-        case 'spotify':
-          break;
-        case 'youtube':
-          break;
-        case 'soundcloud':
-          break;
-        default:
-          break;
-      }
-    }
-    this.setState(payload);
   }
 
   render() {
+    const { currentPlaylist } = this.props;
+    let songs = currentPlaylist.songs;
 
     return (
       <BrowserRouter>
         <Segment style={{ height: '100vh' }} inverted>
-          <Grid style={{ height: '90vh' }} className="p-r-1">
-            <Grid.Column width={3}>
+          <Grid style={{ height: '87vh' }} className="p-r-1">
+            <Grid.Column width={3} height="100%">
               <SidePanel
                 login={this.state.login}
                 user={this.state.user}
@@ -85,30 +76,27 @@ class App extends Component {
             <Grid.Column
               width={13}
               style={{
-                background: 'linear-gradient(to bottom, #1a2980, #26d0ce)'
+                background: 'linear-gradient(to bottom, #1a2980, #26d0ce)',
+                height: '100%', overflow:'scroll'
               }}>
               <Route exact path="/" component={Home} />
               <Route path="/home" component={Home} />
               <Route path="/tokenHandler" component={TokenKeeper} />
-              <Route path="/playlist" component={Test} />
+              <Route path="/playlist" component={Playlist} />
+              <Route path="/search" component={Search} />
             </Grid.Column>
           </Grid>
-          <ReactMediaVisualizer
-            playlist={this.state.playlist}
-            playlistIsPlaying={this.state.playlistIsPlaying}
-            theme={this.state.theme}
-            receiveStateUpdates={this.receiveStateUpdates}
-            currentSongIndex={this.state.currentSongIndex}
-          />
+          {currentPlaylist.songs&&<MusicPlayer playlist={ currentPlaylist.songs} />}
         </Segment>
       </BrowserRouter>
     );
   }
 }
 const mapStateToProps = state => ({
-  accessToken: state.getAccessToken.accessToken
+  accessToken: state.getAccessToken.accessToken,
+  currentPlaylist: state.playlists.currentPlaylist
 });
 export default connect(
   mapStateToProps,
-  { setPlaylists }
+  { setPlaylists, setCurrentPlaylist }
 )(App);

@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import { List, Icon, Grid, Dimmer, Segment, ListItem } from 'semantic-ui-react';
+import { List, Icon, Grid, Dimmer,  ListItem } from 'semantic-ui-react';
 
 export default class TrackList extends Component {
   state = { dimmerActive: true };

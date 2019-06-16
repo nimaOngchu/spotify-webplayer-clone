@@ -3,7 +3,7 @@ import { Icon, Divider, List, Image, Button } from 'semantic-ui-react';
 import CustomMenu from './CustomMenu';
 const Custom_Mnu = [
   { content: 'home', icon: 'home', linkTo: '/home' },
-  { content: 'search', icon: 'search' },
+  { content: 'search', icon: 'search' ,linkTo: '/home'},
   { content: 'Your Library', icon: 'book', linkTo: '/playlist' }
 ];
 export class SidePanel extends Component {
@@ -27,7 +27,7 @@ export class SidePanel extends Component {
   };
 
   render() {
-    const { login, user, token } = this.props;
+    const {  user, token } = this.props;
 
     return (
       <Fragment>
@@ -43,12 +43,14 @@ export class SidePanel extends Component {
           activeMenu={this.state.activeMenu}
           click={this.changeActiveClass}
           secondaryContent="playlist"
+          linkTo ='/home'
         />
         <CustomMenu
           content="nima"
           activeMenu={this.state.activeMenu}
           click={this.changeActiveClass}
           secondaryContent="Playlist"
+          linkTo= '/home'
         />
         <div className={'sidepanelFooter'}>
           <Divider />

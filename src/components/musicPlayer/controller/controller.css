@@ -1,0 +1,10 @@
+.controller-container i{
+font-size: 2rem;
+margin: 2rem 1rem 0 1rem;
+}
+.controller-container i{
+    cursor: pointer;
+}
+.controller-container i:hover{
+    color:white;
+}

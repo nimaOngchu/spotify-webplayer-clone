@@ -4,42 +4,24 @@ import { connect } from 'react-redux';
 import { setCurrentPlaylist } from '../../stateStore/actions';
 import SpotifyWebApi from '../../utility/Spotify';
 import { Redirect } from 'react-router-dom';
-class Playlist extends Component {
+
+class PlaylistCollection extends Component {
   state = {
-    icon_name: 'play circle outline',
+
     redirect: false
   };
 
   handleShow = () => this.setState({ active: true });
   handleHide = () => this.setState({ active: false });
   setActivePlaylist = () => {
-    SpotifyWebApi.getPlaylist(this.props.playlist.id).then(playlist => {
-      let songs = [];
-      playlist.tracks.items.map(item => {
-console.log(item);
-        let song = {
-          song_name: item.track.name,
-          src: item.track.preview_url,
-          artists: item.track.artists.map(artist => artist.name),
-          duration: item.track.duration_ms / 60000,
-          albumName: item.track.album.name
-        };
-        songs.push(song);
-      });
 
-      let playlistInfo = {
-        playlistName: playlist.name,
-        playlistImg: playlist.images[0].url,
-        owner: playlist.owner.display_name,
-        totalSongs: playlist.tracks.total,
-        songs: songs
-      };
-      this.props.setCurrentPlaylist(playlistInfo);
+    SpotifyWebApi.getPlaylist(this.props.playlist.id).then(playlist => {
+    this.props.setCurrentPlaylist(playlist);
     });
-  }
+
+  };
   onPlayPauseClick = () => {
     this.state.icon_name === 'play circle outline' &&
-
     this.state.icon_name === 'play circle outline'
       ? this.setState({ icon_name: 'pause circle outline' })
       : this.setState({ icon_name: 'play circle outline' });
@@ -97,4 +79,4 @@ console.log(item);
 export default connect(
   null,
   { setCurrentPlaylist }
-)(Playlist);
+)(PlaylistCollection);

@@ -2,7 +2,7 @@ import React, { Component, Fragment } from 'react';
 import Navbar from './Navbar';
 import { connect } from 'react-redux';
 import { Card, Button } from 'semantic-ui-react';
-import Playlist from './Playlist';
+import PlaylistCollection from './PlaylistCollection';
 
 export class Home extends Component {
   render() {
@@ -15,7 +15,7 @@ export class Home extends Component {
 
         {<Card.Group itemsPerRow={6}>
         {this.props.playlists.map(playlist => (
-          <Playlist key= {playlist.id} playlist={playlist}/>
+          <PlaylistCollection key= {playlist.id} playlist={playlist}/>
         ))}
        </Card.Group>}
       </Fragment>

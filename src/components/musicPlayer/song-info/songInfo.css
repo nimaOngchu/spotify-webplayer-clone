@@ -1,0 +1,11 @@
+.song-info-container{
+display:flex;
+align-items: flex-end
+}
+.song-info-container img {
+    height:4rem;
+    width:4rem;
+}
+.text{
+    margin-left:10px;
+}

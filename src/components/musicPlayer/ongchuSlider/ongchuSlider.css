@@ -1,0 +1,45 @@
+
+.music-slider-container {
+ height:  3px;
+ width:100%;
+ border-radius: 60px;
+  }
+  .ongchu-slider-container {
+    position: relative;
+    height: 100%;
+    width:100%;
+  }
+  .ongchu-slider-container .ongchu-slider-track {
+    width: 100%;
+    height: 100%;
+    background: rgba(255, 255, 255, 0.6);
+    cursor: pointer;
+  }
+  .ongchu-slider-container .ongchu-slider-track .ongchu-track-progress {
+    background: #026322;
+    width: 0;
+    height: 100%;
+
+  }
+  .ongchu-slider-container .ongchu-thumb-container {
+    width: 12px;
+    height: 12px;
+    position: absolute;
+    left: -5px;
+    top: -4px;
+    border-radius: 50px;
+    cursor: pointer;
+
+  }
+  .ongchu-slider-container .ongchu-thumb-container .ongchu-thumb-indicator {
+    width: 100%;
+    height: 100%;
+   background:#026322;;
+    border-radius: 50%;
+    transition: all 0.2s;
+    -webkit-user-select: none;
+  }
+  .ongchu-slider-container .ongchu-thumb-container .ongchu-thumb-indicator:focus {
+    transform: scale(1.3);
+    opacity: 0.8;
+  }
