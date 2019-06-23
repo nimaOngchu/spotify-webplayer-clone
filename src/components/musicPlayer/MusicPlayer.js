@@ -2,9 +2,8 @@ import React, { Component } from 'react';
 import './musicplayer.css';
 import SongInfo from './song-info/SongInfo';
 import Controller from './controller/Controller';
-
 import OngchuSlider from './ongchuSlider/OngchuSlider';
-const song = new Audio();
+import Song from '../../utility/Audio';
 
 class MusicPlayer extends Component {
   constructor() {
@@ -13,7 +12,6 @@ class MusicPlayer extends Component {
     this.state = {
       currentSongIndex: 0,
       playPauseButton: 'play_circle_outline',
-      muted: false,
       volume: 100,
       sliderValue: 0,
       currentTime: 0
@@ -21,78 +19,76 @@ class MusicPlayer extends Component {
   }
 
   componentDidMount() {
-
+    this.loadSong();
     setInterval(this.autoPlayNextSong, 100);
   }
   changeSliderValue = (value, name) => {
     if (name === 'progressBar') {
       this.setState({ sliderValue: value });
-      song.currentTime = (value / 100) * song.duration;
+      Song.currentTime = (value / 100) * Song.duration;
     } else if (name === 'volume') {
       this.setState({ volume: value });
+      Song.volume = (value / 100).toFixed(2);
     }
   };
   loadSong = () => {
-    if (this.props.currentSongInfo) {
-      song.src = this.props.playlist[this.state.currentSongIndex].src;
-    }
+    Song.src = this.props.playlist ? this.props.playlist[this.state.currentSongIndex].src: null;
   };
   autoPlayNextSong = () => {
-    let updateProgressBar = ((song.currentTime / song.duration) * 100).toFixed(
+    let updateProgressBar = ((Song.currentTime / Song.duration) * 100).toFixed(
       3
     );
     this.setState({ sliderValue: updateProgressBar });
-    this.setState({ currentTime: song.currentTime });
-    if (song.ended) {
+    this.setState({ currentTime: Song.currentTime });
+    if (Song.ended) {
       this.nextSong();
     }
   };
   playPause = () => {
-    if (song.paused) {
-      song.play();
+    if (Song.paused) {
+      Song.play();
       this.setState({ playPauseButton: 'pause_circle_outline' });
     } else {
-      song.pause();
+      Song.pause();
       this.setState({ playPauseButton: 'play_circle_outline' });
     }
   };
   nextSong = () => {
     if (this.state.currentSongIndex < this.props.playlist.length - 1) {
-      song.src = this.props.playlist[this.state.currentSongIndex + 1].src;
+      Song.src = this.props.playlist[this.state.currentSongIndex + 1].src;
       this.setState({ currentSongIndex: this.state.currentSongIndex + 1 });
     } else {
       this.setState({ currentSongIndex: 0 });
-      song.src = this.props.playlist[0].src;
+      Song.src = this.props.playlist[0].src;
     }
     this.setState({ playPauseButton: 'pause_circle_outline' });
-    song.play();
-  };
-
-  adjustVolume = volume => {
-    song.volume = (volume / 100).toFixed(2);
+    Song.play();
   };
 
   prevSong = () => {
     if (this.state.currentSongIndex === 0) {
       this.setState({ currentSongIndex: this.props.playlist.length - 1 });
-      song.src = this.props.playlist[this.props.playlist.length - 1].src;
+      Song.src = this.props.playlist[this.props.playlist.length - 1].src;
     } else {
       this.setState({ currentSongIndex: this.state.currentSongIndex - 1 });
-      song.src = this.props.playlist[this.state.currentSongIndex - 1].src;
+      Song.src = this.props.playlist[this.state.currentSongIndex - 1].src;
     }
     this.setState({ playPauseButton: 'pause_circle_outline' });
-    song.play();
+    Song.play();
   };
+
   render() {
-    this.loadSong();
-    let currentSongInfo = this.props.playlist[this.state.currentSongIndex];
+    let currentSongInfo = this.props.playlist ? this.props.playlist[this.state.currentSongIndex] : null;
     return (
       <div className="muicplayer-conatainer">
-        <div className ='song-info-contianer'>   <SongInfo
-          songTitle={currentSongInfo.song_name}
-          albumName={currentSongInfo.artist}
-          image={currentSongInfo.image}
-        /></div>
+        <div className="song-info-contianer">
+          {' '}
+          {currentSongInfo && <SongInfo
+            songTitle={currentSongInfo.song_name}
+            artists={currentSongInfo.artists}
+            image={currentSongInfo.image}
+          />}
+        </div>
 
         <div className="slider-controls">
           <Controller
@@ -107,13 +103,14 @@ class MusicPlayer extends Component {
             <div className="song-duration">
               {(this.state.currentTime / 100).toFixed(2)}
             </div>
+
             <OngchuSlider
               sliderName="progressBar"
               value={this.state.sliderValue}
               changeValue={this.changeSliderValue}
             />
             <div className="song-duration">
-              {(song.duration / 100).toFixed(2)}
+              {(Song.duration / 100).toFixed(2)}
             </div>
           </div>
         </div>
@@ -124,7 +121,6 @@ class MusicPlayer extends Component {
             sliderName="volume"
             value={this.state.volume}
             changeValue={this.changeSliderValue}
-            adjustVolume={this.adjustVolume}
           />
         </div>
       </div>

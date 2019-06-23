@@ -1,9 +1,10 @@
 import React, { Component, Fragment } from 'react';
 import { Icon, Divider, List, Image, Button } from 'semantic-ui-react';
 import CustomMenu from './CustomMenu';
+import setSpotifyWebApi from '../../utility/Spotify';
 const Custom_Mnu = [
   { content: 'home', icon: 'home', linkTo: '/home' },
-  { content: 'search', icon: 'search' ,linkTo: '/home'},
+  { content: 'search', icon: 'search', linkTo: '/home' },
   { content: 'Your Library', icon: 'book', linkTo: '/playlist' }
 ];
 export class SidePanel extends Component {
@@ -11,6 +12,26 @@ export class SidePanel extends Component {
 
   changeActiveClass = menuName => {
     this.setState({ activeMenu: menuName });
+  };
+  componentDidMount() {
+    this.recentlyPlayed();
+  }
+
+  recentlyPlayed = () => {
+    setSpotifyWebApi.getSpotify.getMyRecentlyPlayedTracks().then(tracks => {
+      let playlist = [];
+      tracks.items.map(item => {
+        // console.log(item);
+        playlist.push(item.context.uri);
+        return null;
+      });
+      let recentlyPlayed = [...new Set(playlist)];
+      let final = recentlyPlayed.map(track => {
+        return track.substr(track.indexOf(':') + 1);
+      });
+
+      console.log(final);
+    });
   };
 
   displayCustomMenu = () => {
@@ -27,7 +48,7 @@ export class SidePanel extends Component {
   };
 
   render() {
-    const {  user, token } = this.props;
+    const { user, token } = this.props;
 
     return (
       <Fragment>
@@ -43,14 +64,14 @@ export class SidePanel extends Component {
           activeMenu={this.state.activeMenu}
           click={this.changeActiveClass}
           secondaryContent="playlist"
-          linkTo ='/home'
+          linkTo="/home"
         />
         <CustomMenu
           content="nima"
           activeMenu={this.state.activeMenu}
           click={this.changeActiveClass}
           secondaryContent="Playlist"
-          linkTo= '/home'
+          linkTo="/home"
         />
         <div className={'sidepanelFooter'}>
           <Divider />

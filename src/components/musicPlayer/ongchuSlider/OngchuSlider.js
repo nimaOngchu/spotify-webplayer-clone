@@ -2,8 +2,7 @@ import React, { Component } from 'react';
 import './ongchuSlider.css';
 
 export class OngchuSlider extends Component {
-  //props
-  //value
+
   state = {
     dragging: false
   };
@@ -31,7 +30,6 @@ export class OngchuSlider extends Component {
       (trackProgress / sliderContainerOffsetWidth) * 100
     );
     this.props.changeValue(progressBar, this.props.sliderName);
-    this.props.adjustVolume && this.props.adjustVolume(progressBar)
   };
   onMouseMove = e => {
     let sliderContianerOffseLeft = this.sliderContainer.offsetLeft;
@@ -54,7 +52,7 @@ export class OngchuSlider extends Component {
       );
 
       this.props.changeValue(progressBar, this.props.sliderName);
-      this.props.adjustVolume && this.props.adjustVolume(progressBar)
+
     }
   };
 

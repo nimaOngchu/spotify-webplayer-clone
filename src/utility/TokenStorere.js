@@ -27,4 +27,4 @@ export class TokenHandler extends Component {
     }
 }
 
-export default connect(null,{setAccessToken})(TokenHandler)
+export default TokenHandler

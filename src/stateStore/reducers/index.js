@@ -20,7 +20,8 @@ const user_reducer = (state = inintialUserState, action) => {
 
 const initialPlaylistsState = {
     playlists: [],
-    currentPlaylist:[]
+    currentPlaylist: [],
+    currentSongIndex: 0
 }
 const playlists_reducer = (state = initialPlaylistsState, action) => {
     switch (action.type) {
@@ -33,7 +34,12 @@ const playlists_reducer = (state = initialPlaylistsState, action) => {
                 return {
                     ...state,
                     currentPlaylist: action.payload.currentPlaylist
-                };
+            };
+        case actionTypes.SET_CURRENT_SONG_INDEX:
+            return {
+                ...state,
+                currentSongIndex:action.payload.currentSongIndex
+            }
         default: return state
     }
 

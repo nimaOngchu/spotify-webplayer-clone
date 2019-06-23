@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
-import { setAccessToken } from '../stateStore/actions';
+
 export class TokenHandler extends Component {
 
     getHashParams = () => {
@@ -20,7 +19,6 @@ export class TokenHandler extends Component {
   render() {
 
         let token = this.getHashParams().access_token;
-      this.props.setAccessToken(token)
       localStorage.setItem("accessToken", token);
         return (
            <Redirect to ='/'/>
@@ -28,4 +26,4 @@ export class TokenHandler extends Component {
     }
 }
 
-export default connect(null,{setAccessToken})(TokenHandler)
+export default TokenHandler

@@ -1,4 +1,9 @@
 import Spotify from 'spotify-web-api-js';
 
 const SpotifyWebApi = new Spotify();
-export default SpotifyWebApi;
+let accessToken = localStorage.getItem('accessToken');
+const setSpotifyWebApi = {
+    getSpotify: SpotifyWebApi,
+    setToken: SpotifyWebApi.setAccessToken(accessToken)
+}
+export default setSpotifyWebApi;

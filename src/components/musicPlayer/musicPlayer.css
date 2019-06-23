@@ -13,8 +13,10 @@ padding:1.5rem;
 }
 .playlist-volume-container{
   display: flex;
-  width:25%;
+  width:20%;
   align-items: center;
+  padding-left:6rem;
+  padding-right:4rem;
 
 }
 .slider-time-container{
@@ -37,12 +39,11 @@ align-items: center;
   margin:4px 4px 4px 0;
   cursor: pointer;
 }
-.playlist-volume-containeras{
- margin:4rem;
- display: flex;
- width:10%;
-}
 
 .song-info-contianer{
   width:25%;
+}
+.volume-icon{
+  width:40%;
+
 }

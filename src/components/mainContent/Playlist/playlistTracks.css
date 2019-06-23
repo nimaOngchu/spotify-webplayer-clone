@@ -1,0 +1,15 @@
+.img-container{
+    margin-left: 4rem;
+}
+.playlistContainer{
+
+    height:90vh;
+}
+.trackList-overlay{
+    padding:0 1rem;
+}
+.trackList-overlay:hover{
+
+    background-color: rgba(0, 0, 0, .5)
+/* opacity: 0.4; */
+}

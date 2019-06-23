@@ -27,14 +27,14 @@ class PlaylistCollection extends Component {
       : this.setState({ icon_name: 'play circle outline' });
   };
   dimmerClicked = () => {
-    this.setActivePlaylist();
+    // this.setActivePlaylist();
     this.setState({ redirect: true });
   };
 
   render() {
     const { active, redirect } = this.state;
     if (redirect) {
-      return <Redirect to="/playlist" />;
+      return <Redirect to={`/playlist/${this.props.playlist.id}`} />;
     }
     const content = (
       <div>
