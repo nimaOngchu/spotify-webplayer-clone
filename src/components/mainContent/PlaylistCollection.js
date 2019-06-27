@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { Card, Icon, Image, Dimmer } from 'semantic-ui-react';
 import { connect } from 'react-redux';
 import { setCurrentPlaylist } from '../../stateStore/actions';
-import SpotifyWebApi from '../../utility/Spotify';
+import setSpotifyWebApi from '../../utility/Spotify';
 import { Redirect } from 'react-router-dom';
 
 class PlaylistCollection extends Component {
@@ -15,7 +15,7 @@ class PlaylistCollection extends Component {
   handleHide = () => this.setState({ active: false });
   setActivePlaylist = () => {
 
-    SpotifyWebApi.getPlaylist(this.props.playlist.id).then(playlist => {
+    setSpotifyWebApi.getSpotify.getPlaylist(this.props.playlist.id).then(playlist => {
     this.props.setCurrentPlaylist(playlist);
     });
 
@@ -27,14 +27,14 @@ class PlaylistCollection extends Component {
       : this.setState({ icon_name: 'play circle outline' });
   };
   dimmerClicked = () => {
-    // this.setActivePlaylist();
+    this.setActivePlaylist();
     this.setState({ redirect: true });
   };
 
   render() {
     const { active, redirect } = this.state;
     if (redirect) {
-      return <Redirect to={`/playlist/${this.props.playlist.id}`} />;
+      return <Redirect key={this.props.playlist.id}to={`/playlist/${this.props.playlist.id}`} />;
     }
     const content = (
       <div>

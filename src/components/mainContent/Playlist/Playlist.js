@@ -5,20 +5,25 @@ import { Grid, List } from 'semantic-ui-react';
 import TrackList from './TrackList';
 import TrackListSummary from './TrackListSummary';
 import { setCurrentPlaylist } from '../../../stateStore/actions';
-import SpotifyWebApi from '../../../utility/Spotify';
+import setSpotifyWebApi from '../../../utility/Spotify';
 export class Playlist extends Component {
+
   componentDidMount() {
-
-    let accessToken = localStorage.getItem('accessToken');
-    SpotifyWebApi.setAccessToken(accessToken);
     const id = this.props.match.params.id;
-    SpotifyWebApi.getPlaylist(id).then(playlist => {
+     setSpotifyWebApi.getSpotify
+      .getPlaylist(id)
+      .then(playlist => {
+        this.props.setCurrentPlaylist(playlist);
 
-      this.props.setCurrentPlaylist(playlist);
-
-    }).catch(err =>console.log('error form spotify'+ err));
-
+      })
+      .catch(err => console.log('error form spotify' + err));
   }
+  // shouldComponentUpdate(nextProps, nextState) {
+  //   console.log(nextProps, nextState);
+  //   console.log(this.props, this.state);
+
+  //   return false;
+  // }
   render() {
     const { currentPlaylist } = this.props;
 
@@ -48,13 +53,7 @@ export class Playlist extends Component {
 const mapStateToProps = state => ({
   currentPlaylist: state.playlists.currentPlaylist
 });
-// const mpaDispatchToProps = (dispatch) => {
-//   return {
-//       setCurrentPlaylist: (playlist) => {
-//           dispatch(setCurrentPlaylist(playlist));
-//   }
-// }
-// }
+
 export default connect(
   mapStateToProps,
   { setCurrentPlaylist }
