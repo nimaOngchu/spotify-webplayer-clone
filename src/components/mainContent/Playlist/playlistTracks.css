@@ -3,7 +3,8 @@
 }
 .playlistContainer{
 
-    height:90vh;
+    height:87vh;
+    overflow-y: scroll;
 }
 .trackList-overlay{
     padding:0 1rem;

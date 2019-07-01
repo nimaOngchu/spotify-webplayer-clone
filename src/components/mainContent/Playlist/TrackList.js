@@ -7,6 +7,7 @@ export default class TrackList extends Component {
     let foramtedArtist = '';
     artists.map(artist => {
       foramtedArtist = foramtedArtist.concat(artist + ', ');
+      return null;
     });
     return foramtedArtist.slice(0, -2);
   };

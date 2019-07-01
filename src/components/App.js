@@ -12,9 +12,9 @@ import TokenKeeper from './TokenKeeper';
 import Search from './mainContent/search/Search';
 import MusicPlayer from './musicPlayer/MusicPlayer';
 import songs from '../songs';
+import Searched_albums from './mainContent/search/searchResults/Searched_albums';
 
 class App extends Component {
-
   componentDidMount() {
     let accessToken = localStorage.getItem('accessToken');
     // setSpotifyWebApi.getSpotify.setAccessToken(accessToken);
@@ -25,19 +25,13 @@ class App extends Component {
     user: null,
     token: null,
     userLibrary: null,
-    currentPlaylists: songs
+    currentPlaylists: songs,
+    background_color: 'linear-gradient(to bottom, #1a2980, #26d0ce)'
   };
 
-  // getHashParams = () => {
-  //   var hashParams = {};
-  //   var e,
-  //     r = /([^&;=]+)=?([^&;]*)/g,
-  //     q = window.location.hash.substring(1);
-  //   while ((e = r.exec(q))) {
-  //     hashParams[e[1]] = decodeURIComponent(e[2]);
-  //   }
-  //   return hashParams;
-  // };
+  changeBackgroundColor = color => {
+    this.setState({ background_color: color });
+  };
 
   getUserInfo = () => {
     setSpotifyWebApi.getSpotify.getMe().then(user => {
@@ -48,9 +42,6 @@ class App extends Component {
   getUserPlaylist = userId => {
     setSpotifyWebApi.getSpotify.getUserPlaylists(userId).then(playlists => {
       this.props.setPlaylists(playlists.items);
-      setSpotifyWebApi.getSpotify.getPlaylist(playlists.items[0].id).then(playlist => {
-        // this.props.setCurrentPlaylist(playlist);
-      });
     });
   };
 
@@ -60,22 +51,33 @@ class App extends Component {
     return (
       <BrowserRouter>
         <Segment style={{ height: '100vh' }} inverted>
-          <Grid style={{ height: '87vh' }} className="p-r-1">
+          <Grid
+            style={{ height: '87vh', background: 'black' }}
+            className="p-r-1">
             <Grid.Column width={3} height="100%">
               <SidePanel user={this.state.user} token={this.state.token} />
             </Grid.Column>
             <Grid.Column
               width={13}
               style={{
-                background: 'linear-gradient(to bottom, #1a2980, #26d0ce)',
-                height: '100%',
-                overflow: 'scroll'
-              }}>
+                background: this.state.background_color,
+                height: '100%'
+              }}
+              className="app-maincontent">
               <Route exact path="/" component={Home} />
-              <Route path="/home" component={Home} />
+              <Route
+                path="/home"
+                render={props => (
+                  <Home
+                    {...props}
+                    changeBackgroundColor={this.changeBackgroundColor}
+                  />
+                )}
+              />
               <Route path="/tokenHandler" component={TokenKeeper} />
               <Route path="/playlist/:id" component={Playlist} />
-              <Route path="/search" component={Search} />
+              <Route path="/search" component ={Search}/>
+
             </Grid.Column>
           </Grid>
           <MusicPlayer

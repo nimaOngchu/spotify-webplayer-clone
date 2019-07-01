@@ -6,6 +6,7 @@ export default function SongInfo(props) {
     let foramtedArtist =''
     artists.map(artist => {
       foramtedArtist = foramtedArtist.concat(artist + ', ');
+      return null;
     })
     return foramtedArtist.slice(0, -2)
 

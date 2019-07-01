@@ -1,0 +1,11 @@
+.home-wrapper{
+    padding:2rem;
+  overflow-y: scroll;
+  height:100%;
+}
+
+.button-wrapper{
+display: flex;
+padding:40px;
+justify-content: center;
+}

@@ -1,17 +1,13 @@
 import React, { Component } from 'react';
 import { Menu } from 'semantic-ui-react';
-
-const NAV_MENU_ITEMS = [
-  { name: 'FEATURED' },
-  { name: 'PODCAST' },
-  { name: 'CHARTS' },
-  { name: 'GENERES' },
-  { name: 'NEW REALESES' },
-  { name: 'DISCOVER' }
-];
+import { Link } from 'react-router-dom';
 
 export default class Navbar extends Component {
-  state = { activeItem: NAV_MENU_ITEMS[0].name };
+  constructor(props) {
+    super(props);
+    this.state = { activeItem: this.props.NavItems[0] };
+  }
+
   handleItemClick = (e, { name }) => {
     this.setState({ activeItem: name });
   };
@@ -19,13 +15,16 @@ export default class Navbar extends Component {
     const { activeItem } = this.state;
     return (
       <Menu secondary inverted pointing>
-        {NAV_MENU_ITEMS.map(menu => (
+        {this.props.NavItems.map(menu => (
+          <Link to={this.props.link+ '/'+menu} key={menu}>
           <Menu.Item
-            key={menu.name}
-            name={menu.name}
-            active={activeItem === menu.name}
+
+            name={menu}
+            active={activeItem === menu}
             onClick={this.handleItemClick}
+            style ={{textTransform:'uppercase'}}
           />
+          </Link>
         ))}
       </Menu>
     );

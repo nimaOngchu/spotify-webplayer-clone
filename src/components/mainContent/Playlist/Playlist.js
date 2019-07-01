@@ -18,12 +18,7 @@ export class Playlist extends Component {
       })
       .catch(err => console.log('error form spotify' + err));
   }
-  // shouldComponentUpdate(nextProps, nextState) {
-  //   console.log(nextProps, nextState);
-  //   console.log(this.props, this.state);
 
-  //   return false;
-  // }
   render() {
     const { currentPlaylist } = this.props;
 

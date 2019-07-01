@@ -1,7 +1,16 @@
 .App {
   text-align: center;
 }
-
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
+.app-maincontent{
+  padding:0 !important;
+  height: '100%'!important;
+}
 .ui.menu {
  justify-content: center;
 }
@@ -25,12 +34,11 @@
 /* SidePanel.js */
 .custom_menu{
   display:flex;
-  align-items: center;
-  font-size: 20px;
   padding:10px 5px 0 0;
   text-transform: capitalize;
   cursor: pointer;
   position: relative;
+  font-size: 5px!important;
 
 }
 a:hover{
@@ -50,7 +58,8 @@ color: #ffff;
 }
 .custom_menu_item{
   font-size: 16px;
-  padding-left:10px;
+  font-weight: 900
+
 }
 .m-l{
   margin-left:25px;

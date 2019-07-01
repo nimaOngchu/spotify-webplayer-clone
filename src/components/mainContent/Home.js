@@ -3,26 +3,40 @@ import Navbar from './Navbar';
 import { connect } from 'react-redux';
 import { Card, Button } from 'semantic-ui-react';
 import PlaylistCollection from './PlaylistCollection';
-
+import './Home.css';
+const NavItems = [
+   'featured' ,
+   'podcast' ,
+   'charts' ,
+   'generes' ,
+   'new releases' ,
+   'discover'
+];
 export class Home extends Component {
   render() {
     return (
-      <Fragment >
-        <Navbar />
-        <div style ={{display:'flex',padding:'40px', justifyContent:'center'}}>
-          <Button children='New Playlist' color='green' style={{borderRadius: '100px'}}/>
+      <div className="home-wrapper">
+        <Navbar NavItems={NavItems} />
+        <div className="button-wrapper">
+          <Button
+            children="New Playlist"
+            color="green"
+            style={{ borderRadius: '100px' }}
+          />
         </div>
-
-        {<Card.Group itemsPerRow={6}>
-        {this.props.playlists.map(playlist => (
-          <PlaylistCollection key= {playlist.id} playlist={playlist}/>
-        ))}
-       </Card.Group>}
-      </Fragment>
+        <Card.Group itemsPerRow={6}>
+          {this.props.playlists.map(playlist => (
+            <PlaylistCollection key={playlist.id} playlist={playlist} />
+          ))}
+        </Card.Group>
+      </div>
     );
   }
 }
-const mapStateToProps = state=>({
-  playlists:state.playlists.playlists
-  })
-export default connect(mapStateToProps,null)(Home);
+const mapStateToProps = state => ({
+  playlists: state.playlists.playlists
+});
+export default connect(
+  mapStateToProps,
+  null
+)(Home);
