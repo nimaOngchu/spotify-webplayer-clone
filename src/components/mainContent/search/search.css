@@ -14,5 +14,12 @@ font-weight: 900;
     background:rgb(17, 16, 16);
     width: 100%;
     padding:2rem;
-    
+
+}
+.search_route_wrapper{
+    height:68vh;
+    overflow-y: scroll;
+    overflow-x: hidden;
+    width:100%;
+   
 }

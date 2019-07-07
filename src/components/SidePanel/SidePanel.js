@@ -108,7 +108,7 @@ export class SidePanel extends Component {
                 activeMenu={this.state.activeMenu}
                 makeActive={this.changeActiveClass}
                 secondaryContent={playlist.type}
-                linkTo={linkTo}
+                linkTo={`/playlist/${playlist.id}`}
                 playlist={playlist}
                 activeMenuchecker={playlist.id}
                 setCurrentPlaylist={this.props.setCurrentPlaylist}

@@ -3,6 +3,9 @@ import './search.css';
 import setSpotifyWebApi from '../../../utility/Spotify';
 import Navbar from '../Navbar';
 import Searched_albums from './searchResults/Searched_albums';
+import Searched_artists from './searchResults/Searched_artists';
+import SearchedSongs from './searchResults/SearchedSongs';
+import SearchedPlaylists from './searchResults/SearchedPlaylists';
 import { Route } from 'react-router-dom';
 
 export class Search extends Component {
@@ -18,7 +21,6 @@ export class Search extends Component {
     const query = e.target.value;
     const types = ['album', 'artist', 'playlist', 'track'];
     if (!query) {
-      console.log('start typing to search');
       this.setState({
         NavItems: null
       });
@@ -32,6 +34,7 @@ export class Search extends Component {
         { market: 'NO' }
       );
       this.setNavItems(searchResults);
+
       this.setState({
         albums: searchResults.albums,
         tracks: searchResults.tracks,
@@ -46,13 +49,14 @@ export class Search extends Component {
   };
 
   setNavItems = searchResults => {
+
     let navItems = ['Top Results'];
     const checkItems = (checkItem, itemToAddToNav) => {
       if (checkItem.items.length > 0) {
         navItems.push(itemToAddToNav);
       }
     };
-    checkItems(searchResults.artists, 'Artists');
+    checkItems(searchResults.artists, 'artists');
     checkItems(searchResults.tracks, 'songs');
     checkItems(searchResults.playlists, 'Playlists');
     checkItems(searchResults.albums, 'albums');
@@ -66,6 +70,7 @@ export class Search extends Component {
     e.target.value = '';
   };
   render() {
+
     return (
       <div>
         <input
@@ -80,8 +85,34 @@ export class Search extends Component {
 
         {this.state.NavItems ? (
           <div className="search-content">
-            <Navbar NavItems={this.state.NavItems} link={`search`} />
-            <Route path="search/albums" component={Searched_albums} />
+            <Navbar NavItems={this.state.NavItems} link={`/search`} />
+            <div className="search_route_wrapper">
+              <Route path="/search/albums"
+                render={props => (
+                  <SearchedPlaylists
+                    {...props}
+                    playlists={this.state.albums}
+                  />
+                )}
+              />
+              <Route path="/search/artists" component={Searched_artists} />
+              <Route
+                path="/search/playlists"
+                render={props => (
+                  <SearchedPlaylists
+                    {...props}
+                    playlists={this.state.playlists}
+                  />
+                )}
+              />
+              <Route
+                path="/search/songs"
+                render={props => (
+                  <SearchedSongs {...props} songs={this.state.tracks} />
+                )}
+              />
+              {/* <Route path="/search/top-songs" component={Searched_top_songs} /> */}
+            </div>
           </div>
         ) : (
           <div className="search-content" style={{ textAlign: 'center' }}>

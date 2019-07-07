@@ -3,7 +3,7 @@ import { Grid, Segment } from 'semantic-ui-react';
 import './App.css';
 import SidePanel from './SidePanel/SidePanel';
 import { connect } from 'react-redux';
-import { setPlaylists, setCurrentPlaylist } from '../stateStore/actions';
+import { setPlaylists } from '../stateStore/actions';
 import setSpotifyWebApi from '../utility/Spotify';
 import Home from './mainContent/Home';
 import { Route, BrowserRouter } from 'react-router-dom';
@@ -12,7 +12,6 @@ import TokenKeeper from './TokenKeeper';
 import Search from './mainContent/search/Search';
 import MusicPlayer from './musicPlayer/MusicPlayer';
 import songs from '../songs';
-import Searched_albums from './mainContent/search/searchResults/Searched_albums';
 
 class App extends Component {
   componentDidMount() {
@@ -81,7 +80,7 @@ class App extends Component {
             </Grid.Column>
           </Grid>
           <MusicPlayer
-            playlist={currentPlaylist.songs ? currentPlaylist.songs : null}
+            playlist={currentPlaylist ? currentPlaylist.songs : null}
           />
         </Segment>
       </BrowserRouter>
@@ -90,9 +89,9 @@ class App extends Component {
 }
 const mapStateToProps = state => ({
   accessToken: state.getAccessToken.accessToken,
-  currentPlaylist: state.playlists.currentPlaylist
+  currentPlaylist: state.playlists.currentlyPlayingPlaylist
 });
 export default connect(
   mapStateToProps,
-  { setPlaylists, setCurrentPlaylist }
+  { setPlaylists }
 )(App);

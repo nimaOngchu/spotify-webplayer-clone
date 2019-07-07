@@ -10,7 +10,7 @@ export function Controller(props) {
         skip_previous
       </i>
       <i className="material-icons" style={{fontSize:'2.8rem'}} onClick={props.playPause}>
-        {props.playPauseButton}
+        {props.song.paused?'play_circle_outline':'pause_circle_outline'}
       </i>
       <i className="material-icons" onClick={props.nextSong}>
         skip_next

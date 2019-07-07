@@ -4,6 +4,8 @@ import SongInfo from './song-info/SongInfo';
 import Controller from './controller/Controller';
 import OngchuSlider from './ongchuSlider/OngchuSlider';
 import Song from '../../utility/Audio';
+import { connect } from 'react-redux';
+import { setCurrentSongIndex, setIsSongPlaying } from '../../stateStore/actions';
 
 class MusicPlayer extends Component {
   constructor() {
@@ -11,7 +13,7 @@ class MusicPlayer extends Component {
 
     this.state = {
       currentSongIndex: 0,
-      playPauseButton: 'play_circle_outline',
+
       volume: 100,
       sliderValue: 0,
       currentTime: 0
@@ -32,7 +34,9 @@ class MusicPlayer extends Component {
     }
   };
   loadSong = () => {
-    Song.src = this.props.playlist ? this.props.playlist[this.state.currentSongIndex].src: null;
+    Song.src = this.props.playlist
+      ? this.props.playlist[this.props.currentSongIndex].src
+      : null;
   };
   autoPlayNextSong = () => {
     let updateProgressBar = ((Song.currentTime / Song.duration) * 100).toFixed(
@@ -47,47 +51,57 @@ class MusicPlayer extends Component {
   playPause = () => {
     if (Song.paused) {
       Song.play();
-      this.setState({ playPauseButton: 'pause_circle_outline' });
+      this.props.setIsSongPlaying(true);
     } else {
       Song.pause();
-      this.setState({ playPauseButton: 'play_circle_outline' });
+      this.props.setIsSongPlaying(false);
     }
   };
   nextSong = () => {
-    if (this.state.currentSongIndex < this.props.playlist.length - 1) {
-      Song.src = this.props.playlist[this.state.currentSongIndex + 1].src;
-      this.setState({ currentSongIndex: this.state.currentSongIndex + 1 });
+    this.props.setIsSongPlaying(true);
+    if (this.props.currentSongIndex < this.props.playlist.length - 1) {
+      this.props.setCurrentSongIndex(this.props.currentSongIndex + 1);
+      Song.src = this.props.playlist[this.props.currentSongIndex + 1].src;
+
+      // this.setState({ currentSongIndex: this.state.currentSongIndex + 1 });
     } else {
-      this.setState({ currentSongIndex: 0 });
+      this.props.setCurrentSongIndex(0);
+      // this.setState({ currentSongIndex: 0 });
       Song.src = this.props.playlist[0].src;
     }
-    this.setState({ playPauseButton: 'pause_circle_outline' });
+
     Song.play();
   };
 
   prevSong = () => {
-    if (this.state.currentSongIndex === 0) {
-      this.setState({ currentSongIndex: this.props.playlist.length - 1 });
+    this.props.setIsSongPlaying(true);
+    if (this.props.currentSongIndex === 0) {
+      this.props.setCurrentSongIndex(this.props.playlist.length - 1);
+      // this.setState({ currentSongIndex: this.props.playlist.length - 1 });
       Song.src = this.props.playlist[this.props.playlist.length - 1].src;
     } else {
-      this.setState({ currentSongIndex: this.state.currentSongIndex - 1 });
-      Song.src = this.props.playlist[this.state.currentSongIndex - 1].src;
+      this.props.setCurrentSongIndex(this.props.currentSongIndex - 1);
+      // this.setState({ currentSongIndex: this.state.currentSongIndex - 1 });
+      Song.src = this.props.playlist[this.props.currentSongIndex - 1].src;
     }
-    this.setState({ playPauseButton: 'pause_circle_outline' });
+
     Song.play();
   };
 
   render() {
-    let currentSongInfo = this.props.playlist ? this.props.playlist[this.state.currentSongIndex] : null;
+    const { currentSongIndex, playlist } = this.props;
+    let currentSongInfo = playlist ? playlist[currentSongIndex] : null;
     return (
       <div className="muicplayer-conatainer">
         <div className="song-info-contianer">
           {' '}
-          {currentSongInfo && <SongInfo
-            songTitle={currentSongInfo.song_name}
-            artists={currentSongInfo.artists}
-            image={currentSongInfo.image}
-          />}
+          {currentSongInfo && (
+            <SongInfo
+              songTitle={currentSongInfo.song_name}
+              artists={currentSongInfo.artists}
+              image={currentSongInfo.image}
+            />
+          )}
         </div>
 
         <div className="slider-controls">
@@ -97,7 +111,7 @@ class MusicPlayer extends Component {
             nextSong={this.nextSong}
             shuffle={this.shuffle}
             repeat={this.repeat}
-            playPauseButton={this.state.playPauseButton}
+            song={Song}
           />
           <div className="slider-time-container">
             <div className="song-duration">
@@ -127,4 +141,10 @@ class MusicPlayer extends Component {
     );
   }
 }
-export default MusicPlayer;
+const mapStateToProps = state => ({
+  currentSongIndex: state.playlists.currentSongIndex
+});
+export default connect(
+  mapStateToProps,
+  { setCurrentSongIndex , setIsSongPlaying}
+)(MusicPlayer);

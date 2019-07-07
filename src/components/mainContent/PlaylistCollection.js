@@ -7,18 +7,27 @@ import { Redirect } from 'react-router-dom';
 
 class PlaylistCollection extends Component {
   state = {
-
-    redirect: false
+    redirect: false,
+    playlist: null
   };
+  componentDidMount() {
 
+}
   handleShow = () => this.setState({ active: true });
   handleHide = () => this.setState({ active: false });
   setActivePlaylist = () => {
-
-    setSpotifyWebApi.getSpotify.getPlaylist(this.props.playlist.id).then(playlist => {
-    this.props.setCurrentPlaylist(playlist);
-    });
-
+    const playlistType = this.props.playlist.type;
+    playlistType === 'playlist'
+      ? setSpotifyWebApi.getSpotify
+          .getPlaylist(this.props.playlist.id)
+          .then(playlist => {
+            this.props.setCurrentPlaylist(playlist);
+          })
+      : setSpotifyWebApi.getSpotify
+          .getAlbum(this.props.playlist.id)
+          .then(playlist => {
+            this.props.setCurrentPlaylist(playlist);
+          });
   };
   onPlayPauseClick = () => {
     this.state.icon_name === 'play circle outline' &&
@@ -34,7 +43,12 @@ class PlaylistCollection extends Component {
   render() {
     const { active, redirect } = this.state;
     if (redirect) {
-      return <Redirect key={this.props.playlist.id}to={`/playlist/${this.props.playlist.id}`} />;
+      return (
+        <Redirect
+          key={this.props.playlist.id}
+          to={`/playlist/${this.props.playlist.id}`}
+        />
+      );
     }
     const content = (
       <div>
@@ -67,7 +81,7 @@ class PlaylistCollection extends Component {
           </Card.Header>
           <Card.Meta className="greyText">
             <span className="date">
-              {this.props.playlist.owner.display_name}
+              {this.props.playlist.owner?this.props.playlist.owner.display_name : this.props.playlist.artists[0].name}
             </span>
           </Card.Meta>
         </Card.Content>

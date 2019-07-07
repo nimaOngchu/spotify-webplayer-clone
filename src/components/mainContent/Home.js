@@ -16,7 +16,7 @@ export class Home extends Component {
   render() {
     return (
       <div className="home-wrapper">
-        <Navbar NavItems={NavItems} />
+        <Navbar NavItems={NavItems} link="/home"/>
         <div className="button-wrapper">
           <Button
             children="New Playlist"

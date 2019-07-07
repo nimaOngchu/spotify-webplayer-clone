@@ -1,9 +1,7 @@
 import React from 'react'
+import SearchedPlaylists from './SearchedPlaylists';
 
-export default function Searched_albums() {
+export default function Searched_albums({}) {
     return (
-        <div style={{height:'200px', width:'200px', background:'red'}}>
-            Albums
-        </div>
-    )
+      <SearchedPlaylists/> )
 }

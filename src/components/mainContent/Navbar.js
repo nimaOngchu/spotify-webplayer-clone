@@ -16,15 +16,15 @@ export default class Navbar extends Component {
     return (
       <Menu secondary inverted pointing>
         {this.props.NavItems.map(menu => (
-          <Link to={this.props.link+ '/'+menu} key={menu}>
           <Menu.Item
-
+            as={Link}
+            to={this.props.link + '/' + menu}
+            key={menu}
             name={menu}
             active={activeItem === menu}
             onClick={this.handleItemClick}
-            style ={{textTransform:'uppercase'}}
+            style={{ textTransform: 'uppercase' }}
           />
-          </Link>
         ))}
       </Menu>
     );
