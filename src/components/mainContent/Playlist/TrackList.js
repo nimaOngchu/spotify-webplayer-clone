@@ -4,7 +4,7 @@ import Song from '../../../utility/Audio';
 
 class TrackList extends Component {
   state = {
-    iconName: 'music',
+    musicIcon: true,
     songIndex: null,
     songPlaying: false
   };
@@ -18,17 +18,19 @@ class TrackList extends Component {
       this.props.changeLocalSongIndex(this.props.globalSongIndex);
     }
   }
-  checkCurrentlyPlaying = () => {
+  handleActiveClass = () => {
     if (this.props.isSongPlaying) {
     }
     if (
       this.props.currentlyPlayingPlaylist &&
-      this.props.currentlyPlayingPlaylist.id === this.props.currentPlaylist.id
+      this.props.currentlyPlayingPlaylist.id ===
+        this.props.currentPlaylist.id &&
+      this.props.globalSongIndex === this.props.song.trackIndex
     ) {
-      console.log('they are same');
-      this.props.changeLocalSongIndex(this.props.globalSongIndex);
+      return 'currentlyPlaying ';
     }
   };
+
   formatArtists = artists => {
     let foramtedArtist = '';
     artists.map(artist => {
@@ -38,46 +40,68 @@ class TrackList extends Component {
     return foramtedArtist.slice(0, -2);
   };
   onSelect = () => {
-    this.setState({ iconName: 'play' });
+    // this.setState({ musicIcon:true });
   };
   onTrackLeave = () => {
-    !this.state.songPlaying && this.setState({ iconName: 'music' });
+    // this.setState({musicIcon:false})
+  };
+  handleIconName = () => {
+    if (this.props.isSongPlaying) {
+    }
+    if (
+      this.props.currentlyPlayingPlaylist &&
+      this.props.currentlyPlayingPlaylist.id ===
+        this.props.currentPlaylist.id &&
+      this.props.globalSongIndex === this.props.song.trackIndex
+    ) {
+      if (Song.paused) {
+        return 'play';
+      } else {
+        return 'pause';
+      }
+    } else {
+      return 'music'
+    }
   };
   playMusic = () => {
-    // this.props.setIsSongPlaying(true)
-    Song.src = this.props.currentPlaylist.songs[this.props.song.trackIndex].src;
-    Song.play();
-    this.setState({
-      songPlaying: true
-    });
-    this.props.setGlobalSongIndex(this.props.song.trackIndex);
-    this.props.changeLocalSongIndex(this.props.song.trackIndex);
-    this.props.setCurrentlyPlayingPlaylist(this.props.currentPlaylist);
-    this.props.globalSongIndex === this.props.song.trackIndex && Song.paused
-      ? this.setState({ iconName: 'play' })
-      : this.setState({ iconName: 'pause' });
+    this.props.setIsSongPlaying(true);
+    if (
+      this.props.currentlyPlayingPlaylist &&
+      this.props.currentlyPlayingPlaylist.id ===
+        this.props.currentPlaylist.id &&
+      this.props.globalSongIndex === this.props.song.trackIndex
+    ) {
+      if (Song.paused) {
+        Song.play();
+      } else {
+        Song.pause();
+      }
+    } else {
+      Song.src = this.props.currentPlaylist.songs[
+        this.props.song.trackIndex
+      ].src;
+      this.props.setGlobalSongIndex(this.props.song.trackIndex);
+      this.props.setCurrentlyPlayingPlaylist(this.props.currentPlaylist);
+      Song.play();
+      console.log('componet new');
+    }
   };
   render() {
     // this.checkCurrentlyPlaying();
     const { song, globalSongIndex, localSongIndex } = this.props;
-    console.log('tracklist');
+
     return (
       <div
         className="trackList-overlay"
-        onMouseEnter={this.onSelect}
+        onMouseEnter={this.setState}
         onMouseLeave={this.onTrackLeave}>
         <List.Item>
-          <Grid
-            className={
-              this.props.localSongIndex === this.props.song.trackIndex
-                ? 'currentlyPlaying '
-                : ''
-            }>
+          <Grid className={this.handleActiveClass()}>
             <Grid.Column
               style={{ display: 'flex', alignItems: 'center' }}
               width={14}>
               <Icon
-                name={this.state.iconName}
+                name={this.handleIconName()}
                 style={{ marginRight: '.5rem' }}
                 onClick={this.playMusic}
               />
