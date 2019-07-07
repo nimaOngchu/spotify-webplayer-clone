@@ -64,7 +64,7 @@ class TrackList extends Component {
     }
   };
   playMusic = () => {
-    this.props.setIsSongPlaying(true);
+
     if (
       this.props.currentlyPlayingPlaylist &&
       this.props.currentlyPlayingPlaylist.id ===
@@ -73,8 +73,10 @@ class TrackList extends Component {
     ) {
       if (Song.paused) {
         Song.play();
+        this.props.setIsSongPlaying(true);
       } else {
         Song.pause();
+        this.props.setIsSongPlaying(false);
       }
     } else {
       Song.src = this.props.currentPlaylist.songs[
@@ -83,6 +85,7 @@ class TrackList extends Component {
       this.props.setGlobalSongIndex(this.props.song.trackIndex);
       this.props.setCurrentlyPlayingPlaylist(this.props.currentPlaylist);
       Song.play();
+      this.props.setIsSongPlaying(true);
       console.log('componet new');
     }
   };
