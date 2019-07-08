@@ -2,11 +2,13 @@ import React, { Component } from 'react';
 import './search.css';
 import setSpotifyWebApi from '../../../utility/Spotify';
 import Navbar from '../Navbar';
-import Searched_albums from './searchResults/Searched_albums';
-import Searched_artists from './searchResults/Searched_artists';
+
 import SearchedSongs from './searchResults/SearchedSongs';
 import SearchedPlaylists from './searchResults/SearchedPlaylists';
-import { Route } from 'react-router-dom';
+import { Route, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
+import { setCurrentPlaylist } from '../../../stateStore/actions';
+import TopResults from './searchResults/TopResults';
 
 export class Search extends Component {
   state = {
@@ -14,12 +16,13 @@ export class Search extends Component {
     albums: null,
     tracks: null,
     playlists: null,
-    artists: null
+    artists: null,
+    Redirect: false
   };
   componentDidMount() {}
   handleChange = async e => {
     const query = e.target.value;
-    const types = ['album', 'artist', 'playlist', 'track'];
+    const types = ['album',  'playlist', 'track'];
     if (!query) {
       this.setState({
         NavItems: null
@@ -37,28 +40,28 @@ export class Search extends Component {
 
       this.setState({
         albums: searchResults.albums,
-        tracks: searchResults.tracks,
         playlists: searchResults.playlists,
         artists: searchResults.artists
       });
+      this.saveSongsToPlaylist(searchResults.tracks);
     } catch (error) {
       if (error.status === 400) {
         console.log('no results found');
       }
     }
+    this.setState({ Redirect: true });
+    // <Redirect to="/search/top-results" />
   };
 
   setNavItems = searchResults => {
-
-    let navItems = ['Top Results'];
+    let navItems = ['top-results'];
     const checkItems = (checkItem, itemToAddToNav) => {
       if (checkItem.items.length > 0) {
         navItems.push(itemToAddToNav);
       }
     };
-    checkItems(searchResults.artists, 'artists');
-    checkItems(searchResults.tracks, 'songs');
     checkItems(searchResults.playlists, 'Playlists');
+      checkItems(searchResults.tracks, 'songs');
     checkItems(searchResults.albums, 'albums');
     if (searchResults.tracks.items.length < 1) {
       navItems.shift();
@@ -66,13 +69,28 @@ export class Search extends Component {
 
     this.setState({ NavItems: navItems });
   };
+  saveSongsToPlaylist = songs => {
+    console.log(songs);
+    let songList = {
+      id: songs.items[0].id,
+      name: 'Searched Songs',
+      images: [{ url: null }],
+      owner: 'searched songs',
+      total: songs.total,
+      tracks: {
+        items: songs.items.map(track => {
+          return { track };
+        })
+      }
+    };
+    this.props.setCurrentPlaylist(songList);
+  };
   handleFocus = e => {
     e.target.value = '';
   };
   render() {
-
     return (
-      <div>
+      <React.Fragment>
         <input
           type="text"
           name="search"
@@ -87,15 +105,13 @@ export class Search extends Component {
           <div className="search-content">
             <Navbar NavItems={this.state.NavItems} link={`/search`} />
             <div className="search_route_wrapper">
-              <Route path="/search/albums"
+              <Route
+                path="/search/albums"
                 render={props => (
-                  <SearchedPlaylists
-                    {...props}
-                    playlists={this.state.albums}
-                  />
+                  <SearchedPlaylists {...props} playlists={this.state.albums} />
                 )}
               />
-              <Route path="/search/artists" component={Searched_artists} />
+
               <Route
                 path="/search/playlists"
                 render={props => (
@@ -105,13 +121,18 @@ export class Search extends Component {
                   />
                 )}
               />
+              <Route path="/search/songs" component={SearchedSongs} />
               <Route
-                path="/search/songs"
+                exact
+                path="/search/top-results"
                 render={props => (
-                  <SearchedSongs {...props} songs={this.state.tracks} />
+                  <TopResults
+                    {...props}
+                    playlists={this.state.playlists}
+                    albums={this.state.albums}
+                  />
                 )}
               />
-              {/* <Route path="/search/top-songs" component={Searched_top_songs} /> */}
             </div>
           </div>
         ) : (
@@ -120,9 +141,13 @@ export class Search extends Component {
             <p>Find your favorite songs, albums, playlists and artists</p>
           </div>
         )}
-      </div>
+        {this.state.Redirect && <Redirect to="/search/top-results" />}
+      </React.Fragment>
     );
   }
 }
 
-export default Search;
+export default connect(
+  null,
+  { setCurrentPlaylist }
+)(Search);

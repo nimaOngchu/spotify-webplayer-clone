@@ -11,7 +11,6 @@ import Playlist from './mainContent/Playlist/Playlist';
 import TokenKeeper from './TokenKeeper';
 import Search from './mainContent/search/Search';
 import MusicPlayer from './musicPlayer/MusicPlayer';
-import songs from '../songs';
 
 class App extends Component {
   componentDidMount() {
@@ -24,7 +23,6 @@ class App extends Component {
     user: null,
     token: null,
     userLibrary: null,
-    currentPlaylists: songs,
     background_color: 'linear-gradient(to bottom, #1a2980, #26d0ce)'
   };
 

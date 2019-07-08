@@ -29,12 +29,7 @@ class PlaylistCollection extends Component {
             this.props.setCurrentPlaylist(playlist);
           });
   };
-  onPlayPauseClick = () => {
-    this.state.icon_name === 'play circle outline' &&
-    this.state.icon_name === 'play circle outline'
-      ? this.setState({ icon_name: 'pause circle outline' })
-      : this.setState({ icon_name: 'play circle outline' });
-  };
+
   dimmerClicked = () => {
     this.setActivePlaylist();
     this.setState({ redirect: true });

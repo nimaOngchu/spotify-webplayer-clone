@@ -6,28 +6,18 @@ class TrackList extends Component {
   state = {
     musicIcon: true,
     songIndex: null,
-    songPlaying: false
+
+    normalIcon: 'music'
   };
-  componentDidMount() {
-    console.log('component mounted');
-    if (
-      this.props.isSongPlaying &&
-      this.props.currentPlaylist.id ===
-        this.props.setCurrentlyPlayingPlaylist.id
-    ) {
-      this.props.changeLocalSongIndex(this.props.globalSongIndex);
-    }
-  }
+
   handleActiveClass = () => {
-    if (this.props.isSongPlaying) {
-    }
     if (
       this.props.currentlyPlayingPlaylist &&
       this.props.currentlyPlayingPlaylist.id ===
         this.props.currentPlaylist.id &&
       this.props.globalSongIndex === this.props.song.trackIndex
     ) {
-      return 'currentlyPlaying ';
+      return true;
     }
   };
 
@@ -40,14 +30,14 @@ class TrackList extends Component {
     return foramtedArtist.slice(0, -2);
   };
   onSelect = () => {
-    // this.setState({ musicIcon:true });
+    this.setState({ normalIcon: 'play' });
   };
   onTrackLeave = () => {
-    // this.setState({musicIcon:false})
+    this.setState({ normalIcon: 'music' });
   };
   handleIconName = () => {
-    if (this.props.isSongPlaying) {
-    }
+    // if (this.props.isSongPlaying) {
+    // }
     if (
       this.props.currentlyPlayingPlaylist &&
       this.props.currentlyPlayingPlaylist.id ===
@@ -60,11 +50,10 @@ class TrackList extends Component {
         return 'pause';
       }
     } else {
-      return 'music'
+      return 'play';
     }
   };
   playMusic = () => {
-
     if (
       this.props.currentlyPlayingPlaylist &&
       this.props.currentlyPlayingPlaylist.id ===
@@ -73,9 +62,11 @@ class TrackList extends Component {
     ) {
       if (Song.paused) {
         Song.play();
+
         this.props.setIsSongPlaying(true);
       } else {
         Song.pause();
+
         this.props.setIsSongPlaying(false);
       }
     } else {
@@ -85,29 +76,38 @@ class TrackList extends Component {
       this.props.setGlobalSongIndex(this.props.song.trackIndex);
       this.props.setCurrentlyPlayingPlaylist(this.props.currentPlaylist);
       Song.play();
-      this.props.setIsSongPlaying(true);
-      console.log('componet new');
+      this.setState({ selectedIcon: 'pause' });
     }
   };
   render() {
-    // this.checkCurrentlyPlaying();
-    const { song, globalSongIndex, localSongIndex } = this.props;
+    const { song } = this.props;
 
     return (
       <div
         className="trackList-overlay"
-        onMouseEnter={this.setState}
+        onMouseEnter={this.onSelect}
         onMouseLeave={this.onTrackLeave}>
         <List.Item>
-          <Grid className={this.handleActiveClass()}>
+          <Grid className={this.handleActiveClass() ? 'currentlyPlaying' : ''}>
             <Grid.Column
               style={{ display: 'flex', alignItems: 'center' }}
               width={14}>
+              <div className="musicIcon-tracklist">
+                <Icon
+                  className={this.handleActiveClass() ? 'hide-musicIcon' : ''}
+                  name={this.state.normalIcon}
+                />
+              </div>
               <Icon
+                className={
+                  this.handleActiveClass()
+                    ? 'musicIcon-tracklist-when-selected'
+                    : 'hide-musicIcon'
+                }
                 name={this.handleIconName()}
-                style={{ marginRight: '.5rem' }}
                 onClick={this.playMusic}
               />
+
               <List.Content>
                 <List.Header>{song.song_name}</List.Header>
                 <List.Description>

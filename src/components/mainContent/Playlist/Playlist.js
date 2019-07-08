@@ -9,7 +9,7 @@ import setSpotifyWebApi from '../../../utility/Spotify';
 import Song from '../../../utility/Audio';
 export class Playlist extends Component {
   state ={
-    localSongIndex: null,
+
     playPauseText:'play'
   }
 
@@ -23,9 +23,6 @@ export class Playlist extends Component {
       })
       .catch(err => console.log('error form spotify' + err));
 
-  }
-  changeLocalSongIndex = (index) => {
-    this.setState({ localSongIndex:index})
   }
 
   handlePlayPauseText = (text) => {this.setState({playPauseText:text}) }
@@ -65,21 +62,19 @@ export class Playlist extends Component {
           <Grid.Column width={10}>
             <List inverted>
               {currentPlaylist.songs &&
-                currentPlaylist.songs.map(song => (
-                  <TrackList
+                currentPlaylist.songs.map((song, index) => {
+                  return <TrackList
                     song={song}
-                    key={song.song_name + song.duration}
+                    key={index + song.duration}
                     currentPlaylist={currentPlaylist}
-                    localSongIndex={this.state.localSongIndex}
-                    changeLocalSongIndex={this.changeLocalSongIndex}
                     globalSongIndex={globalSongIndex}
                     setGlobalSongIndex={setCurrentSongIndex}
                     currentlyPlayingPlaylist={currentlyPlayingPlaylist}
                     setCurrentlyPlayingPlaylist={setCurrentlyPlayingPlaylist}
                     setIsSongPlaying={setIsSongPlaying}
-
+                    isSongPlaying ={isSongPlaying}
                   />
-                ))}
+                })}
             </List>
           </Grid.Column>
         </Grid>
