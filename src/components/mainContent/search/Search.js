@@ -5,7 +5,7 @@ import Navbar from '../Navbar';
 
 import SearchedSongs from './searchResults/SearchedSongs';
 import SearchedPlaylists from './searchResults/SearchedPlaylists';
-import { Route, Redirect } from 'react-router-dom';
+import { Route, Redirect ,Switch} from 'react-router-dom';
 import { connect } from 'react-redux';
 import { setCurrentPlaylist } from '../../../stateStore/actions';
 import TopResults from './searchResults/TopResults';
@@ -19,10 +19,10 @@ export class Search extends Component {
     artists: null,
     Redirect: false
   };
-  componentDidMount() {}
+
   handleChange = async e => {
     const query = e.target.value;
-    const types = ['album',  'playlist', 'track'];
+    const types = ['album', 'playlist', 'track'];
     if (!query) {
       this.setState({
         NavItems: null
@@ -61,7 +61,7 @@ export class Search extends Component {
       }
     };
     checkItems(searchResults.playlists, 'Playlists');
-      checkItems(searchResults.tracks, 'songs');
+    checkItems(searchResults.tracks, 'songs');
     checkItems(searchResults.albums, 'albums');
     if (searchResults.tracks.items.length < 1) {
       navItems.shift();
@@ -70,7 +70,6 @@ export class Search extends Component {
     this.setState({ NavItems: navItems });
   };
   saveSongsToPlaylist = songs => {
-    console.log(songs);
     let songList = {
       id: songs.items[0].id,
       name: 'Searched Songs',
@@ -105,6 +104,7 @@ export class Search extends Component {
           <div className="search-content">
             <Navbar NavItems={this.state.NavItems} link={`/search`} />
             <div className="search_route_wrapper">
+              <Switch>
               <Route
                 path="/search/albums"
                 render={props => (
@@ -133,6 +133,8 @@ export class Search extends Component {
                   />
                 )}
               />
+              </Switch>
+
             </div>
           </div>
         ) : (

@@ -6,9 +6,8 @@ import PlaylistCollection from './PlaylistCollection';
 import './Home.css';
 const NavItems = [
    'featured' ,
-   'podcast' ,
-   'charts' ,
-   'generes' ,
+
+   'generes ' ,
    'new releases' ,
    'discover'
 ];

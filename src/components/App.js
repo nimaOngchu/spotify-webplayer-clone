@@ -3,7 +3,7 @@ import { Grid, Segment } from 'semantic-ui-react';
 import './App.css';
 import SidePanel from './SidePanel/SidePanel';
 import { connect } from 'react-redux';
-import { setPlaylists } from '../stateStore/actions';
+import { setPlaylists , setUser} from '../stateStore/actions';
 import setSpotifyWebApi from '../utility/Spotify';
 import Home from './mainContent/Home';
 import { Route, BrowserRouter } from 'react-router-dom';
@@ -11,6 +11,7 @@ import Playlist from './mainContent/Playlist/Playlist';
 import TokenKeeper from './TokenKeeper';
 import Search from './mainContent/search/Search';
 import MusicPlayer from './musicPlayer/MusicPlayer';
+import Library from './mainContent/Library/Library';
 
 class App extends Component {
   componentDidMount() {
@@ -33,6 +34,7 @@ class App extends Component {
   getUserInfo = () => {
     setSpotifyWebApi.getSpotify.getMe().then(user => {
       this.setState({ user: user });
+      this.props.setUser(user);
       this.getUserPlaylist(user.id);
     });
   };
@@ -73,7 +75,8 @@ class App extends Component {
               />
               <Route path="/tokenHandler" component={TokenKeeper} />
               <Route path="/playlist/:id" component={Playlist} />
-              <Route path="/search" component ={Search}/>
+              <Route path="/search" component={Search} />
+              <Route path="/library" component={Library} />
 
             </Grid.Column>
           </Grid>
@@ -91,5 +94,5 @@ const mapStateToProps = state => ({
 });
 export default connect(
   mapStateToProps,
-  { setPlaylists }
+  { setPlaylists, setUser }
 )(App);

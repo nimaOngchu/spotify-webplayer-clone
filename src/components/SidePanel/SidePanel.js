@@ -8,7 +8,7 @@ import { connect } from 'react-redux';
 const Custom_Mnu = [
   { content: 'home', icon: 'home', linkTo: '/home' },
   { content: 'search', icon: 'search', linkTo: '/search' },
-  { content: 'Your Library', icon: 'book', linkTo: '/home' }
+  { content: 'Your Library', icon: 'book', linkTo: '/library' }
 ];
 export class SidePanel extends Component {
   state = {
