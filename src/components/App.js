@@ -5,13 +5,14 @@ import SidePanel from './SidePanel/SidePanel';
 import { connect } from 'react-redux';
 import { setPlaylists , setUser} from '../stateStore/actions';
 import setSpotifyWebApi from '../utility/Spotify';
-import Home from './mainContent/Home';
+import Home from './mainContent/Home/Home';
 import { Route, BrowserRouter } from 'react-router-dom';
 import Playlist from './mainContent/Playlist/Playlist';
 import TokenKeeper from './TokenKeeper';
 import Search from './mainContent/search/Search';
 import MusicPlayer from './musicPlayer/MusicPlayer';
 import Library from './mainContent/Library/Library';
+import PlaylistCollection from './mainContent/PlaylistCollection';
 
 class App extends Component {
   componentDidMount() {
@@ -27,9 +28,9 @@ class App extends Component {
     background_color: 'linear-gradient(to bottom, #1a2980, #26d0ce)'
   };
 
-  changeBackgroundColor = color => {
-    this.setState({ background_color: color });
-  };
+  // changeBackgroundColor = color => {
+  //   this.setState({ background_color: color });
+  // };
 
   getUserInfo = () => {
     setSpotifyWebApi.getSpotify.getMe().then(user => {
@@ -59,21 +60,14 @@ class App extends Component {
             <Grid.Column
               width={13}
               style={{
-                background: this.state.background_color,
+                background: 'rgb(17, 16, 16)',
                 height: '100%'
               }}
               className="app-maincontent">
               <Route exact path="/" component={Home} />
-              <Route
-                path="/home"
-                render={props => (
-                  <Home
-                    {...props}
-                    changeBackgroundColor={this.changeBackgroundColor}
-                  />
-                )}
-              />
+              <Route path="/home" component ={Home}/>
               <Route path="/tokenHandler" component={TokenKeeper} />
+              <Route path='/playlistCollection' component ={PlaylistCollection}
               <Route path="/playlist/:id" component={Playlist} />
               <Route path="/search" component={Search} />
               <Route path="/library" component={Library} />

@@ -37,15 +37,10 @@ export class Playlist extends Component {
       globalSongIndex
     } = this.props;
 
-    const containerStyle = {
-      padding: '2rem',
-      height: '100%'
-    };
-
     return (
 
       currentPlaylist && (
-        <Grid style={{ containerStyle }} className="playlistContainer">
+        <Grid className="playlistContainer">
           <Grid.Column width={5} textAlign="center" style={{ paddingLeft: 60 }}>
             <TrackListSummary
               currentPlaylist={currentPlaylist}
@@ -59,7 +54,7 @@ export class Playlist extends Component {
               setIsSongPlaying={setIsSongPlaying}
             />
           </Grid.Column>
-          <Grid.Column width={10}>
+          <Grid.Column width={10} className ='tracklist-wrapper'>
             <List inverted>
               {currentPlaylist.songs &&
                 currentPlaylist.songs.map((song, index) => {

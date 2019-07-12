@@ -5,17 +5,13 @@ import './Sidepanel.css';
 export default class CustomMenu extends Component {
   componentDidMount() {
     const navUrl = window.location.href;
-    const indexof = navUrl.lastIndexOf('/');
-    const menucChecker = navUrl.substring(indexof + 1);
-    if (menucChecker === '') {
+    if (navUrl.includes('home')) {
       this.props.makeActive('home');
-    } else {
-      this.props.makeActive(menucChecker);
-    }
+   }
+
   }
   handleClick = () => {
     this.props.makeActive(this.props.activeMenuchecker);
-    console.log(this.props.playlist)
     this.props.setCurrentPlaylist &&
       this.props.setCurrentPlaylist(this.props.playlist);
   };
@@ -44,11 +40,16 @@ export default class CustomMenu extends Component {
           ) : (
             <div style={{ height: activeStyle.height, marginRight: '25px' }} />
           )}
-          {this.props.icon && <Icon name={icon} style={{ marginRight: '15px', fontSize:'20px'}}/>}
+          {this.props.icon && (
+            <Icon
+              name={icon}
+              style={{ marginRight: '15px', fontSize: '20px' }}
+            />
+          )}
           <div className="custom_menu_item">
             {content}
             {secondaryContent && (
-              <div style={{ textTransform: 'uppercase',fontWeight:'100' }}>
+              <div style={{ textTransform: 'uppercase', fontWeight: '100' }}>
                 {secondaryContent}
               </div>
             )}

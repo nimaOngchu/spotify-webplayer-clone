@@ -50,7 +50,7 @@ export class Search extends Component {
       }
     }
     this.setState({ Redirect: true });
-    // <Redirect to="/search/top-results" />
+
   };
 
   setNavItems = searchResults => {
