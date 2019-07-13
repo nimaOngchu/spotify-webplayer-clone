@@ -76,7 +76,7 @@ export default function TrackListSummary({
         </Button>
       </div>
 
-      <Card.Content extra className="whiteText">
+      <Card.Content extra className="whiteText" >
         {currentPlaylist.totalSongs} Songs
       </Card.Content>
     </Card>

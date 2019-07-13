@@ -2,8 +2,11 @@ import React, { Component } from 'react';
 import { Redirect } from 'react-router-dom';
 
 export class TokenHandler extends Component {
+  state = {
+    redirect:false
+  }
+  getHashParams = () => {
 
-    getHashParams = () => {
         var hashParams = {};
         var e,
           r = /([^&;=]+)=?([^&;]*)/g,
@@ -14,15 +17,19 @@ export class TokenHandler extends Component {
         return hashParams;
       };
     componentDidMount() {
-
+this.setState({redirect:true})
     }
   render() {
 
         let token = this.getHashParams().access_token;
       localStorage.setItem("accessToken", token);
-        return (
+    if (this.state.redirect){
+    return (
            <Redirect to ='/'/>
-        )
+      )
+    } else {
+      return'LOADING....'
+    }
     }
 }
 

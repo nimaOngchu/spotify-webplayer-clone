@@ -3,7 +3,7 @@ import { Grid, Segment } from 'semantic-ui-react';
 import './App.css';
 import SidePanel from './SidePanel/SidePanel';
 import { connect } from 'react-redux';
-import { setPlaylists , setUser} from '../stateStore/actions';
+import { setPlaylists, setUser } from '../stateStore/actions';
 import setSpotifyWebApi from '../utility/Spotify';
 import Home from './mainContent/Home/Home';
 import { Route, BrowserRouter } from 'react-router-dom';
@@ -13,13 +13,14 @@ import Search from './mainContent/search/Search';
 import MusicPlayer from './musicPlayer/MusicPlayer';
 import Library from './mainContent/Library/Library';
 import PlaylistCollection from './mainContent/PlaylistCollection';
+import SelectedGeneres from './mainContent/Home/SelectedGeneres';
 
 class App extends Component {
   componentDidMount() {
     let accessToken = localStorage.getItem('accessToken');
-    // setSpotifyWebApi.getSpotify.setAccessToken(accessToken);
     this.setState({ token: accessToken });
     this.getUserInfo();
+
   }
   state = {
     user: null,
@@ -27,10 +28,6 @@ class App extends Component {
     userLibrary: null,
     background_color: 'linear-gradient(to bottom, #1a2980, #26d0ce)'
   };
-
-  // changeBackgroundColor = color => {
-  //   this.setState({ background_color: color });
-  // };
 
   getUserInfo = () => {
     setSpotifyWebApi.getSpotify.getMe().then(user => {
@@ -65,13 +62,16 @@ class App extends Component {
               }}
               className="app-maincontent">
               <Route exact path="/" component={Home} />
-              <Route path="/home" component ={Home}/>
+              <Route path="/home" component={Home} />
               <Route path="/tokenHandler" component={TokenKeeper} />
-              <Route path='/playlistCollection' component ={PlaylistCollection}
+              <Route
+                path="/playlistCollection"
+                component={PlaylistCollection}
+              />
               <Route path="/playlist/:id" component={Playlist} />
               <Route path="/search" component={Search} />
               <Route path="/library" component={Library} />
-
+              <Route path='/selected-generes' component ={SelectedGeneres}/>
             </Grid.Column>
           </Grid>
           <MusicPlayer

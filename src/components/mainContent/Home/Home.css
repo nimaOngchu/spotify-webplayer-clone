@@ -9,3 +9,21 @@ display: flex;
 padding:40px;
 justify-content: center;
 }
+.selected-generes-wrapper{
+height:86.9vh;
+overflow-y: scroll;
+
+}
+.seleceted-genere-header{
+  height:300px;
+  width:100%;
+  background-repeat: no-repeat;
+  background-size: 100% 90%;
+}
+.selected-genere-title{
+  height:200px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-transform: capitalize;
+}
