@@ -9,9 +9,9 @@ export default class Generes extends Component {
         redirect: false
     }
     handleLink = async (categoryId, image) => {
-        setSpotifyWebApi.getSpotify.getCategory(categoryId)
+        setSpotifyWebApi().getCategory(categoryId)
         .then(reslt=> console.log(reslt))
-        const selectedGeneres = await setSpotifyWebApi.getSpotify.getCategoryPlaylists(categoryId);
+        const selectedGeneres = await setSpotifyWebApi().getCategoryPlaylists(categoryId);
         this.setState({
             selectedGeneres: selectedGeneres,
             genereImage: image,

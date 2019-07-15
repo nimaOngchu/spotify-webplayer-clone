@@ -7,7 +7,7 @@ class UsersPlaylists extends Component {
   state = { playlists: null };
   componentDidMount() {
     this.props.user &&
-      setSpotifyWebApi.getSpotify
+      setSpotifyWebApi()
         .getUserPlaylists(this.props.user.id)
         .then(playlists => {
           this.setState({ playlists: playlists.items });

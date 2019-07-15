@@ -5,7 +5,7 @@ export class MadeForYou extends Component {
     render() {
         return (
             <div>
-                Made Only for You
+                Made  for You
             </div>
         )
     }

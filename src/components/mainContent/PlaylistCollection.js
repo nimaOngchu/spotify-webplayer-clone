@@ -18,12 +18,12 @@ class PlaylistCollection extends Component {
   setActivePlaylist = () => {
     const playlistType = this.props.playlist.type;
     playlistType === 'playlist'
-      ? setSpotifyWebApi.getSpotify
+      ? setSpotifyWebApi()
           .getPlaylist(this.props.playlist.id)
           .then(playlist => {
             this.props.setCurrentPlaylist(playlist);
           })
-      : setSpotifyWebApi.getSpotify
+      : setSpotifyWebApi()
           .getAlbum(this.props.playlist.id)
           .then(playlist => {
             this.props.setCurrentPlaylist(playlist);

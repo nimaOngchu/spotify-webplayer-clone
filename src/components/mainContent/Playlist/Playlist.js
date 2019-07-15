@@ -15,7 +15,7 @@ export class Playlist extends Component {
 
   componentDidMount() {
     const id = this.props.match.params.id;
-     setSpotifyWebApi.getSpotify
+     setSpotifyWebApi()
       .getPlaylist(id)
       .then(playlist => {
         this.props.setCurrentPlaylist(playlist);

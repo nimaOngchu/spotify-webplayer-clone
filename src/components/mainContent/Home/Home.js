@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import Navbar from '../Navbar';
-import { Card } from 'semantic-ui-react';
 import { Route, Redirect, Switch } from 'react-router-dom';
 import setSpotifyWebApi from '../../../utility/Spotify';
 import './Home.css';
@@ -15,8 +14,8 @@ export class Home extends Component {
 
   }
   makeCallToSpotify = async () => {
-    let promises = [setSpotifyWebApi.getSpotify
-      .getFeaturedPlaylists({country:'US'}), setSpotifyWebApi.getSpotify.getNewReleases({country:'US'}), setSpotifyWebApi.getSpotify.getCategories({country:'US'})]
+    let promises = [setSpotifyWebApi()
+      .getFeaturedPlaylists({country:'US'}), setSpotifyWebApi().getNewReleases({country:'US'}), setSpotifyWebApi().getCategories({country:'US'})]
     const response = await Promise.all(promises);
 
     this.setState({
@@ -27,6 +26,7 @@ export class Home extends Component {
 
   }
   render() {
+
     return (
       <div className="home-wrapper">
         <Navbar NavItems={NavItems} link="/home" />

@@ -16,10 +16,12 @@ import PlaylistCollection from './mainContent/PlaylistCollection';
 import SelectedGeneres from './mainContent/Home/SelectedGeneres';
 
 class App extends Component {
+
   componentDidMount() {
     let accessToken = localStorage.getItem('accessToken');
-    this.setState({ token: accessToken });
+    console.log(accessToken);
     this.getUserInfo();
+    this.setState({ token: accessToken });
 
   }
   state = {
@@ -30,14 +32,15 @@ class App extends Component {
   };
 
   getUserInfo = () => {
-    setSpotifyWebApi.getSpotify.getMe().then(user => {
-      this.setState({ user: user });
-      this.props.setUser(user);
+    setSpotifyWebApi().getMe().then(user => {
+
       this.getUserPlaylist(user.id);
+      this.props.setUser(user);
+      this.setState({ user: user });
     });
   };
-  getUserPlaylist = userId => {
-    setSpotifyWebApi.getSpotify.getUserPlaylists(userId).then(playlists => {
+  getUserPlaylist = (userId) => {
+    setSpotifyWebApi().getUserPlaylists(userId).then(playlists => {
       this.props.setPlaylists(playlists.items);
     });
   };
@@ -47,6 +50,7 @@ class App extends Component {
 
     return (
       <BrowserRouter>
+
         <Segment style={{ height: '100vh' }} inverted>
           <Grid
             style={{ height: '87vh', background: 'black' }}
@@ -78,12 +82,15 @@ class App extends Component {
             playlist={currentPlaylist ? currentPlaylist.songs : null}
           />
         </Segment>
+        {this.state.token === null &&
+          <div className="login-button-wrapper">
+          <button className='login-button'  onClick={() => (window.location = 'http://localhost:8888/login')}>Login to your spotify</button>
+        </div>}
       </BrowserRouter>
     );
   }
 }
 const mapStateToProps = state => ({
-  accessToken: state.getAccessToken.accessToken,
   currentPlaylist: state.playlists.currentlyPlayingPlaylist
 });
 export default connect(

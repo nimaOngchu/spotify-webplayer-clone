@@ -31,7 +31,7 @@ export class Search extends Component {
     }
 
     try {
-      const searchResults = await setSpotifyWebApi.getSpotify.search(
+      const searchResults = await setSpotifyWebApi().search(
         query,
         types,
         { market: 'NO' }

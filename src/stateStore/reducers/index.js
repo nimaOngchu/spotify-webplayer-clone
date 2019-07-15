@@ -57,21 +57,10 @@ const playlists_reducer = (state = initialPlaylistsState, action) => {
     }
 
 }
-// Access Token
-const initialAccessTokenState = { accessToken: null };
-const accessToken_reducer = (state = initialAccessTokenState, action) => {
-    switch (action.type) {
-        case actionTypes.SET_ACCESS_TOKEN:
-            return {
-                accessToken:action.payload.accessToken
-            }
-        default:
-            return state
-    }
-}
+
 const rootReducer = combineReducers({
     user: user_reducer,
     playlists: playlists_reducer,
-   getAccessToken:accessToken_reducer
+
   });
   export default rootReducer;

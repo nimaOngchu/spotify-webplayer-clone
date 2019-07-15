@@ -25,7 +25,7 @@ export class SidePanel extends Component {
 
   recentlyPlayed = () => {
     //getting the recently played tracks
-    setSpotifyWebApi.getSpotify.getMyRecentlyPlayedTracks().then(tracks => {
+    setSpotifyWebApi().getMyRecentlyPlayedTracks().then(tracks => {
       let playlist = [];
       let albums = [];
 
@@ -51,9 +51,9 @@ export class SidePanel extends Component {
 
       this.getPlaylistData(
         playlistIds,
-        setSpotifyWebApi.getSpotify.getPlaylist
+        setSpotifyWebApi().getPlaylist
       );
-      this.getPlaylistData(albumIds, setSpotifyWebApi.getSpotify.getAlbum);
+      this.getPlaylistData(albumIds, setSpotifyWebApi().getAlbum);
     });
   };
 
@@ -118,14 +118,7 @@ export class SidePanel extends Component {
 
         <div className={'sidepanelFooter'}>
           <Divider />
-          {token === null ? (
-            <Button
-              inverted
-              fluid
-              onClick={() => (window.location = 'http://localhost:8888/login')}>
-              Login
-            </Button>
-          ) : (
+
             <List selection verticalAlign="middle">
               <List.Item>
                 <Image avatar src={user && user.images[0].url} />
@@ -136,7 +129,7 @@ export class SidePanel extends Component {
                 </List.Content>
               </List.Item>
             </List>
-          )}
+         
         </div>
       </Fragment>
     );

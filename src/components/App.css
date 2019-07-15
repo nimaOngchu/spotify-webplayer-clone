@@ -74,3 +74,23 @@ padding:10px;
 .p-r-1{
   padding-right: 1rem !important;
 }
+.login-button-wrapper{
+  position:fixed;
+  background:rgba(255,255,255, 0.8);
+  top:0;
+  left:0;
+  right:0;
+  bottom: 0;
+  display: flex;
+  justify-content: center;
+  align-items:center;
+}
+.login-button{
+  width:200px;
+  height:50px;
+  border:none;
+  border-radius: 5px;
+  background: black;
+  color:white;
+  cursor: pointer;
+}
