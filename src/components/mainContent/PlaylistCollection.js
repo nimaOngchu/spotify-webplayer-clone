@@ -64,7 +64,7 @@ class PlaylistCollection extends Component {
           onMouseEnter={this.handleShow}
           onMouseLeave={this.handleHide}
           size="medium"
-          src={this.props.playlist.images[0].url}
+          src={this.props.playlist.images[0]?this.props.playlist.images[0].url:null}
           wrapped
           ui={false}
           onClick={this.dimmerClicked}

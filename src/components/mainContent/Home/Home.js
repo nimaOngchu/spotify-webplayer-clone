@@ -8,7 +8,10 @@ import Generes from './Generes';
 import NewRelease from './NewRelease';
 const NavItems = ['featured', 'generes', 'new-releases', 'discover'];
 export class Home extends Component {
-  state = { featuredPlaylists: null };
+  state = {
+    featuredPlaylists: null,
+    newReleases: null,
+    listOfGeneres:null};
   componentDidMount() {
     this.makeCallToSpotify()
 

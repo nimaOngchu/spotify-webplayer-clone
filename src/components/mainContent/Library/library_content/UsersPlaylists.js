@@ -14,14 +14,19 @@ class UsersPlaylists extends Component {
         });
   }
   render() {
+
     return (
       <div>
         {this.state.playlists && (
+          this.state.playlists.length>0?
           <Card.Group itemsPerRow={6}>
             {this.state.playlists.map(playlist => (
               <PlaylistCollection key={playlist.id} playlist={playlist} />
             ))}
-          </Card.Group>
+            </Card.Group> :
+            <div style={{textAlign:'center', marginTop:'4rem',fontSize:'3rem'}}>
+              You do nont have any playlists yet
+            </div>
         )}
       </div>
     );

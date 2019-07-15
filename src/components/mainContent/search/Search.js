@@ -19,9 +19,20 @@ export class Search extends Component {
     artists: null,
     Redirect: false
   };
+   debounce = (fn) => {
+    let timeout;
 
-  handleChange = async e => {
-    const query = e.target.value;
+    return function() {
+      const functionCall = () => fn.apply(this, arguments);
+
+      clearTimeout(timeout);
+      timeout = setTimeout(functionCall, 200);
+    }
+  }
+
+  handleChange = this.debounce(async (query) => {
+
+    // const query = e.target.value;
     const types = ['album', 'playlist', 'track'];
     if (!query) {
       this.setState({
@@ -51,7 +62,7 @@ export class Search extends Component {
     }
     this.setState({ Redirect: true });
 
-  };
+  });
 
   setNavItems = searchResults => {
     let navItems = ['top-results'];
@@ -63,9 +74,9 @@ export class Search extends Component {
     checkItems(searchResults.playlists, 'Playlists');
     checkItems(searchResults.tracks, 'songs');
     checkItems(searchResults.albums, 'albums');
-    if (searchResults.tracks.items.length < 1) {
-      navItems.shift();
-    }
+    // if (searchResults.tracks.items.length < 1) {
+    //   navItems.shift();
+    // }
 
     this.setState({ NavItems: navItems });
   };
@@ -96,7 +107,7 @@ export class Search extends Component {
           className="spotify_search_input"
           autoComplete="off"
           defaultValue="Start Typing...."
-          onChange={this.handleChange}
+          onChange={e=>this.handleChange(e.target.value)}
           onFocus={this.handleFocus}
         />
 

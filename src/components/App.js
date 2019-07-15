@@ -19,7 +19,7 @@ class App extends Component {
 
   componentDidMount() {
     let accessToken = localStorage.getItem('accessToken');
-    console.log(accessToken);
+
     this.getUserInfo();
     this.setState({ token: accessToken });
 

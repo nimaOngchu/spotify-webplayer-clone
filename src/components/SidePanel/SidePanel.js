@@ -4,6 +4,7 @@ import CustomMenu from './CustomMenu';
 import setSpotifyWebApi from '../../utility/Spotify';
 import { setCurrentPlaylist } from '../../stateStore/actions';
 import { connect } from 'react-redux';
+import { unwatchFile } from 'fs';
 
 const Custom_Mnu = [
   { content: 'home', icon: 'home', linkTo: '/home' },
@@ -121,7 +122,7 @@ export class SidePanel extends Component {
 
             <List selection verticalAlign="middle">
               <List.Item>
-                <Image avatar src={user && user.images[0].url} />
+                <Image avatar src={user && user.images[0] ? user.images[0].url: null} />
                 <List.Content>
                   <List.Header style={{ color: 'white' }}>
                     {user && user.display_name}
@@ -129,7 +130,7 @@ export class SidePanel extends Component {
                 </List.Content>
               </List.Item>
             </List>
-         
+
         </div>
       </Fragment>
     );

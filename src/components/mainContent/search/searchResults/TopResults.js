@@ -9,17 +9,17 @@ export default function TopResults(props) {
     overflow: 'hidden',
     marginBottom: '20px'
   };
-  console.log(props.playlists);
+
   return (
     <>
       <Grid>
         <Grid.Row style={{ height: '350px', overflow: 'hidden' }}>
           <Grid.Column width={4}>
             {' '}
-            <PlaylistCollection
+           {props.playlists.items[0] && <PlaylistCollection
               key={props.playlists.items[0].id}
               playlist={props.playlists.items[0]}
-            />
+            />}
           </Grid.Column>
           <Grid.Column width={11}>
             <SearchedSongs />
