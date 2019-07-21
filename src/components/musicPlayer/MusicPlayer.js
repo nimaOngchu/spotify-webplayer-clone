@@ -1,5 +1,5 @@
 import React, { Component } from 'react';
-import './musicplayer.css';
+import './musicPlayer.css';
 import SongInfo from './song-info/SongInfo';
 import Controller from './controller/Controller';
 import OngchuSlider from './ongchuSlider/OngchuSlider';

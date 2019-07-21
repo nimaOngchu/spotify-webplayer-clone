@@ -84,7 +84,7 @@ class App extends Component {
         </Segment>
         {this.state.token === null &&
           <div className="login-button-wrapper">
-          <button className='login-button'  onClick={() => (window.location = 'http://localhost:8888/login')}>Login to your spotify</button>
+          <button className='login-button'  onClick={() => (window.location = 'https://webplayer.netlify.com/.netlify/functions/api')}>Login to your spotify</button>
         </div>}
       </BrowserRouter>
     );
